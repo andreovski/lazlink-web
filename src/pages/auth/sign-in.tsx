@@ -1,19 +1,33 @@
 import { Button } from "@/components/ui/button";
 
-import { FaGoogle } from "react-icons/fa";
+import { FaExclamationCircle, FaGoogle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export function SignIn() {
-  return (
-    <div className="flex flex-col gap-8 w-full py-8 px-[256px]">
-      <h1 className="text-4xl font-extrabold w-full">Vamos começar?</h1>
-      <p className="leading-9 font-light">
-        Você precisa conectar uma conta do Google, assim conseguimos integrar
-        com seu calendário. É super fácil! <br /> Você só precisa clicar no
-        botão abaixo que cuidamos de todo o resto.
-      </p>
+  const navigate = useNavigate();
 
-      <div className="flex flex-col gap-4 w-full items-center bottom-6 right-0 absolute">
-        <Button className="w-64 flex gap-3">
+  const hasError = false;
+
+  return (
+    <div className="relative mx-auto flex h-[90vh] w-full max-w-[765px] flex-col gap-8 px-8 py-5 md:px-0">
+      {!hasError && (
+        <>
+          <h1 className="w-full text-4xl font-extrabold">Vamos começar?</h1>
+          <p className="leading-9">
+            Você precisa conectar uma conta do Google, assim conseguimos
+            integrar com seu calendário. É super fácil! <br /> Você só precisa
+            clicar no botão abaixo que cuidamos de todo o resto.
+          </p>
+        </>
+      )}
+
+      {hasError && <SignInError />}
+
+      <div className="absolute bottom-6 right-0 flex w-full flex-col items-center gap-4 px-8 text-center md:px-0">
+        <Button
+          onClick={() => navigate("/acesso/config")}
+          className="flex w-64 gap-3"
+        >
           <FaGoogle />
           Entrar com Google
         </Button>
@@ -25,3 +39,19 @@ export function SignIn() {
     </div>
   );
 }
+
+const SignInError = () => {
+  return (
+    <>
+      <FaExclamationCircle className="w-full text-center text-5xl text-primary" />
+
+      <h1 className="w-full text-4xl font-extrabold">Ops!</h1>
+      <p className="font-light leading-9">
+        Parece que algo deu errado na hora de conectar com a sua conta. Vamos
+        tentar novamente?
+        <br />
+        Não esqueça de clicar em ”Autorizar” na próxima página.
+      </p>
+    </>
+  );
+};

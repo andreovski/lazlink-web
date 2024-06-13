@@ -17,7 +17,7 @@ const buttonVariants = cva(
         outline:
           "border border-persian-green-500 bg-background text-persian-green-500 shadow-sm hover:bg-persian-green-100 hover:text-accent-foreground active:bg-persian-green-300 active:text-persian-green-900",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
+          "bg-secondary text-primary shadow-sm hover:bg-secondary/80 active:opacity-60",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
@@ -32,7 +32,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 export interface ButtonProps

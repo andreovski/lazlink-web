@@ -5,11 +5,11 @@ import MainLogo from "@/assets/logo.svg";
 export function BrandHeader() {
   return (
     <>
-      <div className="bg-background flex justify-center max-h-[72px] w-full p-4">
+      <div className="flex max-h-[10vh] w-full justify-center bg-background p-4">
         <img
           src={MainLogo}
           alt="Logo Lazilink"
-          className="w-[100px] h-[40px]"
+          className="h-[40px] w-[100px]"
         />
       </div>
 
