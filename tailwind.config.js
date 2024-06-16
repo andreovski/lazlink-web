@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   darkMode: ["class"],
   content: [
@@ -9,6 +12,7 @@ module.exports = {
   ],
   prefix: "",
   theme: {
+    transparent: "transparent",
     container: {
       center: true,
       padding: "2rem",
@@ -24,8 +28,8 @@ module.exports = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "#FFFCF4",
-        foreground: "#3B3934",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
         white: {
           DEFAULT: "#FFFCF4",
           foreground: "#3B3934",
@@ -42,6 +46,7 @@ module.exports = {
           800: "#00574D",
           900: "#00423A",
         },
+        "linear-bg-white": "var(--linear-bg-white)",
         primary: {
           DEFAULT: "#259688",
           foreground: "hsl(var(--primary-foreground))",

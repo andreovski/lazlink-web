@@ -12,13 +12,15 @@ const buttonVariants = cva(
       variant: {
         default:
           "bg-primary text-primary-foreground shadow hover:bg-primary/90 active:bg-persian-green-700",
+        solid:
+          "bg-neutral-800 dark:bg-neutral-400 text-primary-foreground shadow hover:bg-neutral-600 dark:hover:bg-neutral-300 dark:active:bg-neutral-500 active:bg-persian-green-700",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-persian-green-500 bg-background text-persian-green-500 shadow-sm hover:bg-persian-green-100 hover:text-accent-foreground active:bg-persian-green-300 active:text-persian-green-900",
+          "border border-persian-green-500 bg-background text-persian-green-500 shadow-sm active:bg-persian-green-200 hover:bg-persian-green-100 dark:hover:bg-persian-green-800 hover:text-accent-foreground dark:active:text-persian-green-200 active:text-persian-green-900",
         secondary:
           "bg-secondary text-primary shadow-sm hover:bg-secondary/80 active:opacity-60",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: "hover:bg-accent hover:text-accent-foreground text-primary",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

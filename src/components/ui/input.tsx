@@ -10,10 +10,10 @@ export interface InputProps
   error?: FieldError | undefined;
 }
 
-export interface InputFormProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputFormProps extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
+  sublabel?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -38,7 +38,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 );
 Input.displayName = "Input";
 
-const InputForm = ({ name, label, ...props }: InputFormProps) => {
+const InputForm = ({ name, label, sublabel, ...props }: InputFormProps) => {
   const form = useFormContext();
 
   if (!form) {
@@ -55,9 +55,10 @@ const InputForm = ({ name, label, ...props }: InputFormProps) => {
   });
 
   return (
-    <div className="space-y-2">
+    <div className="w-full space-y-1">
       {label && <Label htmlFor={name}>{label}</Label>}
       <Input id={name} error={error} {...props} {...field} />
+      {sublabel && <p className="text-[0.6rem] text-neutral-500">{sublabel}</p>}
     </div>
   );
 };
