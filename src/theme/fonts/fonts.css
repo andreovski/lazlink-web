@@ -1,0 +1,9 @@
+body.font-sans *:not(div):not(button):not(span) {
+  font-family: Inter, "sans-serif";
+}
+body.font-serif *:not(div):not(button):not(span) {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+body.font-josefin-sans *:not(div):not(button):not(span) {
+  font-family: "Josefin Sans", sans-serif;
+}

@@ -19,7 +19,7 @@ export interface InputFormProps extends React.InputHTMLAttributes<HTMLInputEleme
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, error, type, ...props }, ref) => {
     return (
-      <>
+      <div className="w-full">
         <input
           type={type}
           className={cn(
@@ -32,13 +32,19 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {error && (
           <Label className="text-xs text-red-600">{error.message}</Label>
         )}
-      </>
+      </div>
     );
   },
 );
 Input.displayName = "Input";
 
-const InputForm = ({ name, label, sublabel, ...props }: InputFormProps) => {
+const InputForm = ({
+  name,
+  label,
+  sublabel,
+  className,
+  ...props
+}: InputFormProps) => {
   const form = useFormContext();
 
   if (!form) {
@@ -55,7 +61,7 @@ const InputForm = ({ name, label, sublabel, ...props }: InputFormProps) => {
   });
 
   return (
-    <div className="w-full space-y-1">
+    <div className={cn("w-full space-y-1", className)}>
       {label && <Label htmlFor={name}>{label}</Label>}
       <Input id={name} error={error} {...props} {...field} />
       {sublabel && <p className="text-[0.6rem] text-neutral-500">{sublabel}</p>}

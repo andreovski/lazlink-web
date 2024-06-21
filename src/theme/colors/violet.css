@@ -1,0 +1,26 @@
+.violet {
+  --primary-50: #edeaf1;
+  --primary-100: #d2ccdc;
+  --primary-200: #b3aac6;
+  --primary-300: #9487af;
+  --primary-400: #7c6d9d;
+  --primary-500: #43394b;
+  --primary-600: #3c3243;
+  --primary-700: #342b3a;
+  --primary-800: #2b2331;
+  --primary-900: #1d1621;
+  --primary-950: #0f0b11;
+}
+
+/* Theme */
+.violet {
+  --background: #EEEE;
+  --foreground: #2b2331;
+  --primary: #43394b;
+  --primary-foreground: #d2ccdc;
+
+  --border: #b3aac6;
+  --input: #b3aac6;
+
+  --accent: #b3aac6
+}

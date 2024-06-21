@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import {
   DrawerClose,
   DrawerContent,
-  DrawerFooter,
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { InputForm } from "@/components/ui/input";
@@ -11,22 +10,37 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { TextareaForm } from "@/components/ui/textarea";
 import { Xyz } from "@/utils/xyz";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import {
+  FaAdjust,
+  FaChevronRight,
   FaClipboardList,
   FaHashtag,
   FaRegUserCircle,
   FaSave,
   FaTimes,
 } from "react-icons/fa";
+import { settingsProfileValidationSchema } from "./utils";
+import { InferType } from "yup";
+import { InputPhone } from "@/components/ui/input-phone";
+import { SettingsProfileTheme } from "./settings-profile-theme";
 
-export function Settings() {
+type SettingsProfileValidationSchema = InferType<
+  typeof settingsProfileValidationSchema
+>;
+
+export function SettingsProfile() {
   const [useEnterpriseName, setUseEnterpriseName] = useState(false);
   const [isWhatsApp, setIsWhatsApp] = useState(true);
 
-  const form = useForm();
+  const form = useForm<SettingsProfileValidationSchema>({
+    resolver: yupResolver(settingsProfileValidationSchema),
+  });
+
+  const { formState } = form;
 
   const handleCheckChange = (e: boolean) => {
     setUseEnterpriseName(e);
@@ -44,8 +58,20 @@ export function Settings() {
 
   const showAddres = form.watch("showAddress");
 
+  const onSubmit = (values: SettingsProfileValidationSchema) => {
+    console.log("🚀 ~ onSubmit ~ values:", values);
+    return;
+  };
+
+  const handleChangeInputUncontrolled = (name: any, value: any) => {
+    form.setValue(name, value);
+  };
+
+  const errorPhone = formState.errors?.phone;
+  const errorWhatsappPhone = formState.errors?.whatsappPhone;
+
   return (
-    <DrawerContent className="fixed left-auto top-0 mt-0 h-screen w-full rounded-none rounded-l-md md:w-[480px]">
+    <DrawerContent>
       <div className="flex justify-between p-4">
         <DrawerTitle className="text-lg">Editar Perfil</DrawerTitle>
         <DrawerClose>
@@ -54,7 +80,10 @@ export function Settings() {
       </div>
 
       <FormProvider {...form}>
-        <form className="flex w-full flex-col gap-6 overflow-y-scroll px-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex w-full flex-col gap-6 overflow-y-auto px-8"
+        >
           <AvatarUpload name="avatar" className="mx-auto h-20 w-20" />
 
           {/* //* basic info  */}
@@ -79,7 +108,7 @@ export function Settings() {
             </div>
 
             <Xyz condition={useEnterpriseName} xyz="fade down duration-3">
-              <InputForm name="work" label="Profissão/Titulo" />
+              <InputForm name="enterpriseName" label="Nome da empresa" />
             </Xyz>
 
             <TextareaForm name="description" label="Descrição" />
@@ -94,7 +123,22 @@ export function Settings() {
               Informações de contato
             </h1>
 
-            <InputForm name="phone" label="Telefone" />
+            <div className="space-y-2">
+              <Label className="text-sm font-medium" htmlFor="phone">
+                Telefone
+              </Label>
+              <InputPhone
+                id="phone"
+                error={form.formState.errors?.phone}
+                defaultCountry="BR"
+                onChange={(e) => handleChangeInputUncontrolled("phone", e)}
+              />
+              {errorPhone?.message && (
+                <p className="text-xs font-medium text-red-600">
+                  {errorPhone.message}
+                </p>
+              )}
+            </div>
 
             <div className="flex items-center space-x-2 py-2">
               <Switch
@@ -108,7 +152,24 @@ export function Settings() {
             </div>
 
             <Xyz condition={!isWhatsApp} xyz="fade down duration-3">
-              <InputForm name="phone2" label="WhatsApp" />
+              <div className="space-y-2">
+                <Label className="text-sm font-medium" htmlFor="whatsappPhone">
+                  WhatsApp
+                </Label>
+                <InputPhone
+                  id="whatsappPhone"
+                  error={form.formState.errors?.phone}
+                  defaultCountry="BR"
+                  onChange={(e) =>
+                    handleChangeInputUncontrolled("whatsappPhone", e)
+                  }
+                />
+                {errorWhatsappPhone?.message && (
+                  <p className="text-xs font-medium text-red-600">
+                    {errorWhatsappPhone.message}
+                  </p>
+                )}
+              </div>
             </Xyz>
           </div>
 
@@ -132,8 +193,8 @@ export function Settings() {
               </Label>
             </div>
 
-            <InputForm name="code" label="CEP" />
-            <InputForm name="avenue" label="Rua/Avenida/etc." />
+            <InputForm name="postalCode" label="CEP" />
+            <InputForm name="street" label="Rua/Avenida/etc." />
             <InputForm name="city" label="Cidade" />
             <InputForm name="state" label="Estado" />
             <InputForm name="complement" label="Complemento" />
@@ -160,6 +221,17 @@ export function Settings() {
               label="Twitter/X"
               sublabel="Digite apenas o usuário, sem o @"
             />
+          </div>
+
+          <Separator />
+
+          <div className="w-full space-y-2">
+            <h1 className="flex items-center gap-2 font-semibold">
+              <FaAdjust className="text-lg" />
+              Temas
+            </h1>
+
+            <SettingsProfileTheme />
           </div>
 
           <Button type="submit" className="my-4 flex gap-2">

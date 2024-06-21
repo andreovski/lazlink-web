@@ -3,8 +3,12 @@ import { FaArrowCircleUp, FaClock, FaCog, FaEdit } from "react-icons/fa";
 import { Brand } from "@/components/ui/brand";
 import { ThemeDefault } from "./themes/theme-default";
 import { ThemeAlternative } from "./themes/theme-alternative";
-import { Settings } from "../settings";
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  SettingsProfile,
+  SettingsSchedules,
+  SettingsServicos,
+} from "../settings";
 
 const themeComponent: { [key: string]: React.ReactElement } = {
   default: <ThemeDefault />,
@@ -30,17 +34,30 @@ export function Profile() {
               </Button>
             </DrawerTrigger>
 
-            <Settings />
+            <SettingsProfile />
           </Drawer>
 
-          <Button className="flex w-[48%] gap-2 md:flex-1">
-            <FaClock />
-            Editar Horários
-          </Button>
-          <Button className="flex w-[48%] gap-2 md:flex-1">
-            <FaCog />
-            Editar Serviços
-          </Button>
+          <Drawer direction="right">
+            <DrawerTrigger asChild>
+              <Button className="flex w-[48%] gap-2 md:flex-1">
+                <FaClock />
+                Editar Horários
+              </Button>
+            </DrawerTrigger>
+
+            <SettingsSchedules />
+          </Drawer>
+
+          <Drawer direction="right">
+            <DrawerTrigger asChild>
+              <Button className="flex w-[48%] gap-2 md:flex-1">
+                <FaCog />
+                Editar Serviços
+              </Button>
+            </DrawerTrigger>
+
+            <SettingsServicos />
+          </Drawer>
 
           {!isPremiumUser && (
             <Button

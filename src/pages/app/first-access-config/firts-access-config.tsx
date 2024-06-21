@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 
 export function FirstAccessConfig() {
   const form = useForm({
-    // resolver: zodResolver(validateSchema),
     defaultValues: {
       step: 0,
     },

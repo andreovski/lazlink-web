@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url("base.css");
+
+/* Theme Colors */
+@import url("colors/_default.css");
+@import url("colors/ambar.css");
+@import url("colors/coffee.css");
+@import url("colors/sky.css");
+@import url("colors/lilac.css");
+@import url("colors/ice.css");
+@import url("colors/violet.css");
+
+/* @import url("fonts/fonts.css"); */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  p,
+  h1,
+  h2,
+  span {
+    color: rgb(23 23 23 / var(--tw-text-opacity));
+  }
+
+  body {
+    scrollbar-color: var(--input) var(--background) ;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

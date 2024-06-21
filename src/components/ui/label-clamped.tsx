@@ -53,7 +53,7 @@ export function LabelClamped({
         (isClamped ? (
           <span
             onClick={() => setIsClamped(false)}
-            className="dark:white-foreground absolute bottom-0 left-0 right-0 cursor-pointer bg-gradient-to-t from-white via-white to-transparent py-4 text-center font-medium text-primary hover:underline dark:from-white-foreground dark:via-white-foreground"
+            className="dark:from-foregound dark:via-foregound absolute bottom-0 left-0 right-0 cursor-pointer bg-gradient-to-t from-background via-background to-transparent py-4 text-center font-medium text-primary hover:underline"
           >
             veja mais...
           </span>

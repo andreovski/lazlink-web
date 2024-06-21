@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { LabelClamped } from "@/components/ui/label-clamped";
 import { pickInitialNames } from "@/utils";
 import {
+  FaExternalLinkAlt,
   FaFacebook,
   FaInstagram,
   FaLinkedin,
@@ -14,6 +15,8 @@ import {
 export function ThemeDefaultProfile() {
   const avatarURL = "https://github.com/andreovski.png";
   const userName = "André Luiz";
+
+  const link = "https://github.com/andreovski.png";
 
   return (
     <>
@@ -50,14 +53,19 @@ export function ThemeDefaultProfile() {
         ou 5 linhas exibindo um ”ler mais...” para expandir.
       </LabelClamped>
 
+      <div className="flex flex-col">
+        <div className="flex items-center gap-2">
+          <Button variant="link" className="flex h-6 gap-2 p-0">
+            <FaExternalLinkAlt className="text-prmiary" />
+            {link}
+          </Button>
+        </div>
+      </div>
+
       <div className="flex flex-col justify-between gap-2 md:flex-row">
-        <div className="space-y-1">
-          {Array.from({ length: 2 }).map((_, idx) => (
-            <div key={idx} className="flex items-center gap-2">
-              <FaMapMarkerAlt className="text-primary" />
-              <p>Rua Benedito da silva, 23 - Curitiba PR</p>
-            </div>
-          ))}
+        <div className="flex items-start gap-2">
+          <FaMapMarkerAlt className="mt-1 text-primary" />
+          <p>Rua Benedito da silva, 23 - Curitiba/PR - Predio 2</p>
         </div>
 
         <div className="mt-4 flex justify-center gap-4 text-primary md:mt-0">

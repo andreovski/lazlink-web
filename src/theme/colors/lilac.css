@@ -1,0 +1,26 @@
+/* Colors */
+.lilac-dark {
+  --primary-50: #f9ecee;
+  --primary-100: #f1d6db;
+  --primary-200: #e7bcc4;
+  --primary-300: #dca3ae;
+  --primary-400: #d38c99;
+  --primary-500: #cf9aa5; /* Cor principal fornecida */
+  --primary-600: #a87881;
+  --primary-700: #80585d;
+  --primary-800: #593a3c;
+  --primary-900: #331d1f;
+  --primary-950: #1a0d0e;
+}
+/* Theme */
+.lilac-dark {
+  --background: #23222b;
+  --foreground: #cf9aa5;
+  --primary: #cf9aa5;
+  --primary-foreground: #331d1f;
+
+  --border: #80585d;
+  --input: #80585d;
+
+  --accent: #331d1f
+}
