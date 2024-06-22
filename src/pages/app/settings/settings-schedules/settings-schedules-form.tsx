@@ -80,7 +80,7 @@ export function SettingsSchedulesForm({ item }: Props) {
             </div>
           ))}
 
-          <p className="rounded border border-input bg-neutral-50 p-2 text-sm text-neutral-600">
+          <p className="rounded border border-input bg-primary-50 p-2 text-sm text-neutral-600">
             <p className="font-medium">💡 Dica</p>
             se você atende pela manhã, das 8h às 12h e durante a tarde das 14h
             às 18h, crie duas faixas de horário, uma para cada período.
