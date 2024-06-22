@@ -1,5 +1,5 @@
 /* Colors */
-.coffee {
+.cappuccino {
   --primary-50: #F1E8E2;
   --primary-100: #DCC3B3;
   --primary-200: #C6A083;
@@ -13,7 +13,7 @@
   --primary-950: #370F00;
 }
 /* Theme */
-.coffee {
+.cappuccino {
   --background: #F1E8E2;
   --foreground: #4B1600;
   --primary: #8F5C38;

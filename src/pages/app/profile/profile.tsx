@@ -21,7 +21,9 @@ export function Profile() {
 
   return (
     <div className="flex flex-col">
-      <div className="md:h-[85vh]">{themeComponent[userTheme]}</div>
+      <div className="overflow-y-auto md:h-[85vh]">
+        {themeComponent[userTheme]}
+      </div>
 
       <div className="flex w-full flex-col md:h-[15vh]">
         <Brand />

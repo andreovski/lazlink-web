@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 
-type LabelClampedProps = {
+type TextClampedProps = {
   children: string;
   className?: string;
   clamped?: boolean;
   lines?: number;
 };
 
-export function LabelClamped({
+export function TextClamped({
   children,
   className = "",
   lines = 3,
   clamped = true,
-}: LabelClampedProps) {
+}: TextClampedProps) {
   const [isClamped, setIsClamped] = useState(clamped);
   const [showSpans, setShowToggle] = useState(false);
   const paragraphRef = useRef<any>(null);

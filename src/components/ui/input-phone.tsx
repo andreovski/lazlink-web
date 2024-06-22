@@ -24,7 +24,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "./scroll-area";
-import { FieldError } from "react-hook-form";
+import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
 type InputPhoneProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -33,7 +33,7 @@ type InputPhoneProps = Omit<
   Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
     onChange?: (value: RPNInput.Value) => void;
   } & {
-    error?: FieldError | undefined;
+    error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
   };
 
 const InputPhone: React.ForwardRefExoticComponent<InputPhoneProps> =
@@ -120,8 +120,8 @@ const CountrySelect = ({
         <Command>
           <CommandList>
             <ScrollArea className="h-72">
-              <CommandInput placeholder="Search country..." />
-              <CommandEmpty>No country found.</CommandEmpty>
+              <CommandInput placeholder="Procure pelo país..." />
+              <CommandEmpty>Nenhum país foi encontrado.</CommandEmpty>
               <CommandGroup>
                 {options
                   .filter((x) => x.value)
@@ -137,7 +137,7 @@ const CountrySelect = ({
                       />
                       <span className="flex-1 text-sm">{option.label}</span>
                       {option.value && (
-                        <span className="text-sm text-foreground/50">
+                        <span className="text-foreground/50 text-sm">
                           {`+${RPNInput.getCountryCallingCode(option.value)}`}
                         </span>
                       )}

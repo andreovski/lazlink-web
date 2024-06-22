@@ -10,7 +10,7 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { LabelClamped } from "@/components/ui/label-clamped";
+import { TextClamped } from "@/components/ui/text-clamped";
 import { pickInitialNames } from "@/utils";
 
 export function ThemeDefaultProfile() {
@@ -19,9 +19,6 @@ export function ThemeDefaultProfile() {
 
   const linksExternos = [
     { label: "Compre meu e-book", link: "https://google.com" },
-    { label: "Compre meu curso", link: "https://google.com" },
-    { label: "Compre meu curso", link: "https://google.com" },
-    { label: "Compre meu curso", link: "https://google.com" },
     { label: "Compre meu curso", link: "https://google.com" },
   ];
 
@@ -41,7 +38,7 @@ export function ThemeDefaultProfile() {
         </div>
       </div>
 
-      <LabelClamped lines={4}>
+      <TextClamped lines={4}>
         Espaço semelhante a uma bio do Instagram. Permite textos com um limite
         alto de caracteres, porém trunca a visualização inicial em 4 ou 5 linhas
         exibindo um ”ler mais...” para expandir. Espaço semelhante a uma bio do
@@ -58,7 +55,7 @@ export function ThemeDefaultProfile() {
         expandir. Espaço semelhante a uma bio do Instagram. Permite textos com
         um limite alto de caracteres, porém trunca a visualização inicial em 4
         ou 5 linhas exibindo um ”ler mais...” para expandir.
-      </LabelClamped>
+      </TextClamped>
 
       <div className="flex flex-col justify-between gap-2 md:flex-row">
         <div className="flex items-start gap-2">
@@ -84,7 +81,7 @@ export function ThemeDefaultProfile() {
           {linksExternos.map(({ label, link }) => (
             <Button
               onClick={() => window.open(link, "_blank")}
-              className="flex h-8 w-full gap-2 p-0"
+              className="flex h-8 w-full items-center gap-2 p-0"
             >
               <FaExternalLinkAlt className="text-prmiary" />
               {label}

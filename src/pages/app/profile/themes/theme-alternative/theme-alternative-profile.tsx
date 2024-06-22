@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { LabelClamped } from "@/components/ui/label-clamped";
+import { TextClamped } from "@/components/ui/text-clamped";
 import { pickInitialNames } from "@/utils";
 import {
   FaFacebook,
@@ -31,7 +31,7 @@ export function ThemeAlternativeProfile() {
         </div>
       </div>
 
-      <LabelClamped lines={4}>
+      <TextClamped lines={4}>
         Espaço semelhante a uma bio do Instagram. Permite textos com um limite
         alto de caracteres, porém trunca a visualização inicial em 4 ou 5 linhas
         exibindo um ”ler mais...” para expandir. Espaço semelhante a uma bio do
@@ -48,7 +48,7 @@ export function ThemeAlternativeProfile() {
         expandir. Espaço semelhante a uma bio do Instagram. Permite textos com
         um limite alto de caracteres, porém trunca a visualização inicial em 4
         ou 5 linhas exibindo um ”ler mais...” para expandir.
-      </LabelClamped>
+      </TextClamped>
 
       <div className="flex flex-col justify-between gap-2 md:flex-row">
         <div className="space-y-1">

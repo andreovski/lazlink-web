@@ -1,8 +1,8 @@
 export const themeColors: { [key: string]: any } = {
   default: {
     title: "Verde - Claro",
-    color1: "#259688",
-    color2: "#FFFCF4",
+    color1: "#259688", //* Primary
+    color2: "#FFFCF4", //* Background
   },
   dark: {
     title: "Verde - Escuro",
@@ -29,7 +29,7 @@ export const themeColors: { [key: string]: any } = {
     color1: "#b45309",
     color2: "#3B3934",
   },
-  coffee: {
+  cappuccino: {
     title: "Cappuccino",
     color1: "#8F5C38",
     color2: "#F1E8E2",
@@ -58,7 +58,7 @@ export type AppThemes =
   | "sky-dark"
   | "ambar"
   | "ambar-dark"
-  | "coffee"
+  | "cappuccino"
   | "lilac-dark"
   | "ice"
   | "violet";

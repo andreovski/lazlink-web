@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { LabelClamped } from "@/components/ui/label-clamped";
+import { TextClamped } from "@/components/ui/text-clamped";
+import { Scheduling } from "@/pages/app/scheduling";
 import { FaCalendar } from "react-icons/fa";
 
 export function ThemeDefaultServices() {
@@ -13,11 +14,11 @@ export function ThemeDefaultServices() {
             <div key={idx} className="flex items-start gap-2">
               <div className="">
                 <h1 className="text-lg font-medium">Nome do serviço</h1>
-                <LabelClamped lines={3}>
+                <TextClamped lines={3}>
                   Descrição do serviço ofertado, truncado em 2 ou 3 linhas com
                   opção ”ler mais...” Descrição do serviço ofertado, truncado em
                   opção ”ler mais...” Descrição do serviço ofertado, truncado em
-                </LabelClamped>
+                </TextClamped>
 
                 <p className="flex justify-end gap-1">
                   <p className="text-sm">R$</p>
@@ -25,9 +26,11 @@ export function ThemeDefaultServices() {
                 </p>
               </div>
 
-              <Button variant="ghost">
-                <FaCalendar />
-              </Button>
+              <Scheduling>
+                <Button variant="ghost">
+                  <FaCalendar />
+                </Button>
+              </Scheduling>
             </div>
           ))}
         </div>
