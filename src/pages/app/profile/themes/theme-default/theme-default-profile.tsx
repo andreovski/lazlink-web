@@ -1,7 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { LabelClamped } from "@/components/ui/label-clamped";
-import { pickInitialNames } from "@/utils";
 import {
   FaExternalLinkAlt,
   FaFacebook,
@@ -12,11 +8,22 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { LabelClamped } from "@/components/ui/label-clamped";
+import { pickInitialNames } from "@/utils";
+
 export function ThemeDefaultProfile() {
   const avatarURL = "https://github.com/andreovski.png";
   const userName = "André Luiz";
 
-  const link = "https://github.com/andreovski.png";
+  const linksExternos = [
+    { label: "Compre meu e-book", link: "https://google.com" },
+    { label: "Compre meu curso", link: "https://google.com" },
+    { label: "Compre meu curso", link: "https://google.com" },
+    { label: "Compre meu curso", link: "https://google.com" },
+    { label: "Compre meu curso", link: "https://google.com" },
+  ];
 
   return (
     <>
@@ -53,15 +60,6 @@ export function ThemeDefaultProfile() {
         ou 5 linhas exibindo um ”ler mais...” para expandir.
       </LabelClamped>
 
-      <div className="flex flex-col">
-        <div className="flex items-center gap-2">
-          <Button variant="link" className="flex h-6 gap-2 p-0">
-            <FaExternalLinkAlt className="text-prmiary" />
-            {link}
-          </Button>
-        </div>
-      </div>
-
       <div className="flex flex-col justify-between gap-2 md:flex-row">
         <div className="flex items-start gap-2">
           <FaMapMarkerAlt className="mt-1 text-primary" />
@@ -80,6 +78,20 @@ export function ThemeDefaultProfile() {
         <FaWhatsapp className="text-lg" />
         Chame no WhatsApp
       </Button>
+
+      <div className="flex w-full flex-col">
+        <div className="flex flex-col items-center gap-2">
+          {linksExternos.map(({ label, link }) => (
+            <Button
+              onClick={() => window.open(link, "_blank")}
+              className="flex h-8 w-full gap-2 p-0"
+            >
+              <FaExternalLinkAlt className="text-prmiary" />
+              {label}
+            </Button>
+          ))}
+        </div>
+      </div>
     </>
   );
 }
