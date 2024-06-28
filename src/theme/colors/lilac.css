@@ -1,5 +1,5 @@
 /* Colors */
-.lilac-dark {
+.dark.lilac-dark {
   --primary-50: #f9ecee;
   --primary-100: #f1d6db;
   --primary-200: #e7bcc4;
@@ -13,7 +13,7 @@
   --primary-950: #1a0d0e;
 }
 /* Theme */
-.lilac-dark {
+.dark.lilac-dark {
   --background: #23222b;
   --foreground: #cf9aa5;
   --primary: #cf9aa5;

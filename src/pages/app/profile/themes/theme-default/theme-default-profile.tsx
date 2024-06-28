@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { TextClamped } from "@/components/ui/text-clamped";
 import { pickInitialNames } from "@/utils";
+import { toast } from "@/components/ui/use-toast";
 
 export function ThemeDefaultProfile() {
   const avatarURL = "https://github.com/andreovski.png";

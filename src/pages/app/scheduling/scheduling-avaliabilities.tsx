@@ -12,7 +12,7 @@ export function ShedulingAvaliabilities() {
   const [date, hour, step] = form.watch(["date", "hour", "step"]);
 
   return (
-    <>
+    <div className="flex h-full flex-col gap-4">
       <p className="text-sm text-primary-800 dark:text-primary-100">
         Verifique os dias e horários disponíveis para realizar um agendamento do
         serviço escolhido.
@@ -26,6 +26,9 @@ export function ShedulingAvaliabilities() {
           onSelect={(e) => form.setValue("date", e)}
           className="col-span-2 rounded-md border"
           locale={ptBR}
+          disabled={(date) =>
+            date < new Date() || date < new Date("1900-01-01")
+          }
         />
 
         <ScrollArea className="h-full md:h-[330px]">
@@ -39,7 +42,7 @@ export function ShedulingAvaliabilities() {
                 <ToggleGroupItem
                   value={idx.toString()}
                   onClick={() => form.setValue("hour", idx.toString())}
-                  className="w-full justify-start p-2"
+                  className="text-md w-full justify-start p-2"
                   key={idx}
                 >
                   12:00
@@ -50,7 +53,7 @@ export function ShedulingAvaliabilities() {
         </ScrollArea>
       </div>
 
-      <div className="mt-4 grid grid-cols-4 gap-2 pb-4">
+      <div className="mt-4 grid grid-cols-4 gap-2">
         <Button
           onClick={() => form.setValue("step", step - 1)}
           variant="ghost"
@@ -61,13 +64,14 @@ export function ShedulingAvaliabilities() {
         </Button>
         <Button
           disabled={!hour}
-          onClick={() => form.setValue("step", step + 1)}
+          // onClick={() => form.setValue("step", step + 1)}
+          onClick={() => form.setValue("step", 9)}
           className="col-span-3 gap-2"
         >
           Continuar
           <FaArrowRight />
         </Button>
       </div>
-    </>
+    </div>
   );
 }

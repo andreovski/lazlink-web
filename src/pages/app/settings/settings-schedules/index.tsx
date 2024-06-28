@@ -12,8 +12,11 @@ import { Separator } from "@/components/ui/separator";
 import { FaChevronRight, FaTimes } from "react-icons/fa";
 import { daysToSchedule } from "./utils";
 import { SettingsSchedulesForm } from "./settings-schedules-form";
+import { useDisclosure } from "@/utils/hooks/useDisclosure";
 
 export function SettingsSchedules() {
+  const { isOpen, open, close } = useDisclosure({ opened: false });
+
   return (
     <DrawerContent>
       <div className="flex justify-between p-4">
@@ -34,14 +37,19 @@ export function SettingsSchedules() {
               <div className="grid w-full grid-cols-12 items-center gap-2 rounded bg-background px-2">
                 <p className="col-span-10 font-medium">{day.name}</p>
 
-                <Drawer direction="right" modal={false}>
+                <Drawer
+                  open={isOpen}
+                  onOpenChange={(e) => (e ? open() : close())}
+                  direction="right"
+                  modal={false}
+                >
                   <DrawerTrigger asChild>
                     <Button variant="ghost" className="col-span-2 p-0">
                       <FaChevronRight />
                     </Button>
                   </DrawerTrigger>
 
-                  <SettingsSchedulesForm item={day} />
+                  <SettingsSchedulesForm close={close} item={day} />
                 </Drawer>
               </div>
 

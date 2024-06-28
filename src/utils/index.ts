@@ -5,3 +5,8 @@ export function pickInitialNames(fullName: string) {
 
   return secondLetter ? firstLetter + secondLetter : fullName.slice(0, 2);
 }
+
+export const timeStringToMinutes = (time: string) => {
+  const [hours, minutes] = time.split(":").map(Number);
+  return hours * 60 + minutes;
+};

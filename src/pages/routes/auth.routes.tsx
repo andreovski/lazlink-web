@@ -5,13 +5,14 @@ import { BrandHeader } from "@/components/layouts/brand-header";
 import { SignIn } from "../auth/sign-in";
 import { FirstAccessConfig } from "../app/first-access-config";
 import { Profile } from "../app/profile/profile";
+import { Error404 } from "@/components/error/404";
 
 export const authRoutes = createBrowserRouter([
   //* Authenticated routes
   {
     path: "/",
     element: <Outlet />,
-    errorElement: <h1>Um erro ocorreu</h1>,
+    errorElement: <Error404 />,
     children: [
       {
         path: "/",
@@ -22,7 +23,7 @@ export const authRoutes = createBrowserRouter([
   {
     path: "/",
     element: <BrandHeader />,
-    errorElement: <h1>Um erro ocorreu</h1>,
+    errorElement: <Error404 />,
     children: [
       {
         path: "/acesso/config",
@@ -34,7 +35,7 @@ export const authRoutes = createBrowserRouter([
   {
     path: "/",
     element: <BrandHeader />,
-    errorElement: <h1>Um erro ocorreu</h1>,
+    errorElement: <Error404 />,
     children: [
       {
         path: "/login",

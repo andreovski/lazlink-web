@@ -99,10 +99,22 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        colorCycle: {
+          "0%, 100%": { backgroundColor: "red" },
+          "25%": { backgroundColor: "blue" },
+          "50%": { backgroundColor: "green" },
+          "75%": { backgroundColor: "yellow" },
+        },
+        slideBg: {
+          "0%": { backgroundPosition: "100% 0" },
+          "100%": { backgroundPosition: "0% 0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        colorCycle: "colorCycle 4.8s infinite",
+        slideBg: "slideBg 1.2s infinite",
       },
     },
   },

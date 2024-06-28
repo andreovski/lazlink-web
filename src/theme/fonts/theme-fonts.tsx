@@ -1,7 +1,16 @@
 export const themeFonts: { [key: string]: any } = {
-  "font-sans": "Padrão",
-  "font-serif": "ui-serif",
-  "font-josefin-sans": "Josefin Sans",
+  "font-sans": {
+    name: "Padrão",
+    isPremium: false,
+  },
+  "font-serif": {
+    name: "ui-serif",
+    isPremium: false,
+  },
+  "font-josefin-sans": {
+    name: "Josefin Sans",
+    isPremium: true,
+  },
 };
 
 export type ThemeFonts = "font-sans" | "font-serif" | "font-josefin-sans";

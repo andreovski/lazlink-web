@@ -12,21 +12,24 @@ import { TextareaForm } from "@/components/ui/textarea";
 import { Xyz } from "@/utils/xyz";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Label } from "@radix-ui/react-label";
-import { useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import {
   FaAdjust,
   FaChevronRight,
   FaClipboardList,
   FaHashtag,
+  FaLink,
   FaRegUserCircle,
   FaSave,
   FaTimes,
+  FaTrash,
 } from "react-icons/fa";
 import { settingsProfileValidationSchema } from "./utils";
 import { InferType } from "yup";
 import { InputPhone } from "@/components/ui/input-phone";
 import { SettingsProfileTheme } from "./settings-profile-theme";
+import { SettingsExternalLinks } from "./settings-external-links";
 
 type SettingsProfileValidationSchema = InferType<
   typeof settingsProfileValidationSchema
@@ -38,6 +41,9 @@ export function SettingsProfile() {
 
   const form = useForm<SettingsProfileValidationSchema>({
     resolver: yupResolver(settingsProfileValidationSchema),
+    defaultValues: {
+      externalLinks: [],
+    },
   });
 
   const { formState } = form;
@@ -221,6 +227,27 @@ export function SettingsProfile() {
               label="Twitter/X"
               sublabel="Digite apenas o usuário, sem o @"
             />
+          </div>
+
+          <Separator />
+
+          <div className="space-y-2">
+            <h1 className="flex items-center gap-2 font-semibold">
+              <FaLink className="text-lg" />
+              Links externos
+            </h1>
+
+            <SettingsExternalLinks>
+              <Button variant="link" className="px-0" asChild>
+                <div className="flex w-full cursor-pointer justify-between">
+                  <p className="pointer-events-none font-medium text-foreground">
+                    Adicionar links externos
+                  </p>
+
+                  <FaChevronRight className="pointer-events-none" />
+                </div>
+              </Button>
+            </SettingsExternalLinks>
           </div>
 
           <Separator />

@@ -36,3 +36,21 @@ export const settingsProfileValidationSchema = Yup.object({
   facebook: Yup.string().notRequired(),
   twitter: Yup.string().notRequired(),
 });
+
+export const externalLinkFormSchema = Yup.object({
+  externalLinks: Yup.array(
+    Yup.object({
+      title: Yup.string()
+        .required("O campo título é obrigatório ser informado")
+        .max(20, "O título é muito grande (max: 20)"),
+      url: Yup.string()
+        .url()
+        .required("O campo URL é obrigatório ser informado"),
+    }),
+  ),
+});
+
+export const defaultHoursValue = {
+  title: "",
+  url: "",
+};

@@ -13,7 +13,7 @@ type ThemeProviderProps = {
 type ThemeProviderState = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  fontTheme: string;
+  fontTheme: ThemeFonts;
   setFontTheme: (font: ThemeFonts) => void;
 };
 

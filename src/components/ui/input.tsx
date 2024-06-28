@@ -5,31 +5,35 @@ import { cn } from "@/lib/utils";
 
 import { Label } from "./label";
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: FieldError | undefined;
+  hideErrorMessage?: boolean;
 }
 
-export interface InputFormProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputFormProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
   label?: string;
   sublabel?: string;
+  hideErrorMessage?: boolean;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, error, type, ...props }, ref) => {
+  ({ className, error, hideErrorMessage, type, ...props }, ref) => {
+    const border = error ? "border-red-600" : "border-input";
+
     return (
       <div className="w-full">
         <input
           type={type}
           className={cn(
-            `flex h-9 w-full rounded-md border border-${error ? "red-600" : "input"} bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:${error ? "red-600" : "ring-1"} focus-visible:${error ? "red-600" : "ring-ring"} disabled:cursor-not-allowed disabled:opacity-50`,
+            `flex h-9 w-full rounded-md border ${border} bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:${error ? "red-600" : "ring-1"} focus-visible:${error ? "red-600" : "ring-ring"} disabled:cursor-not-allowed disabled:opacity-50`,
             className,
           )}
           ref={ref}
           {...props}
         />
-        {error && (
+        {error && !hideErrorMessage && (
           <Label className="text-xs text-red-600">{error.message}</Label>
         )}
       </div>
@@ -59,6 +63,7 @@ const InputForm = ({
     name,
     defaultValue: "",
   });
+    console.log("🚀 ~ name:", name, error);
 
   return (
     <div className={cn("w-full space-y-1", className)}>
