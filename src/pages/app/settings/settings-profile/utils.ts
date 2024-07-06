@@ -1,8 +1,10 @@
 import * as Yup from "yup";
 
 export const settingsProfileValidationSchema = Yup.object({
-  avatar: Yup.mixed().nullable().notRequired(),
+  _id: Yup.string().required(),
+  avatarUrl: Yup.mixed().nullable(),
   name: Yup.string().required("Esse campo é obrigatório ser informado"),
+  email: Yup.string().required("Esse campo é obrigatório ser informado"),
   useEnterpriseName: Yup.boolean(),
   enterpriseName: Yup.string().when(
     "useEnterpriseName",
@@ -12,9 +14,12 @@ export const settingsProfileValidationSchema = Yup.object({
         : schema.notRequired();
     },
   ),
-  work: Yup.string().required("Esse campo é obrigatório ser informado"),
-  description: Yup.string().max(1000, "Limite de texto excedido"),
-  phone: Yup.string()
+  workTitle: Yup.string().required("Esse campo é obrigatório ser informado"),
+  about: Yup.string()
+    .max(1000, "Limite de texto excedido")
+    .nullable()
+    .notRequired(),
+  cellphone: Yup.string()
     .required("Esse campo é obrigatório ser informado")
     .min(11, "Informe um número válido"),
   isWhatsApp: Yup.boolean(),
@@ -26,15 +31,21 @@ export const settingsProfileValidationSchema = Yup.object({
       : schema;
   }),
   showAddress: Yup.boolean(),
-  postalCode: Yup.string().required("Esse campo é obrigatório ser informado"),
-  street: Yup.string().required("Esse campo é obrigatório ser informado"),
-  city: Yup.string().required("Esse campo campo é obrigatório ser informado"),
-  state: Yup.string().required("Esse campo campo é obrigatório ser informado"),
-  complement: Yup.string().notRequired(),
-  instagram: Yup.string().notRequired(),
-  linkedIn: Yup.string().notRequired(),
-  facebook: Yup.string().notRequired(),
-  twitter: Yup.string().notRequired(),
+  address: Yup.object({
+    postalCode: Yup.string().required("Esse campo é obrigatório ser informado"),
+    street: Yup.string().required("Esse campo é obrigatório ser informado"),
+    city: Yup.string().required("Esse campo campo é obrigatório ser informado"),
+    state: Yup.string().required(
+      "Esse campo campo é obrigatório ser informado",
+    ),
+    complement: Yup.string().notRequired(),
+  }),
+  instagramUrl: Yup.string().notRequired(),
+  linkedInUrl: Yup.string().notRequired(),
+  facebookUrl: Yup.string().notRequired(),
+  twitterUrl: Yup.string().notRequired(),
+  userUrl: Yup.string(),
+  theme: Yup.object(),
 });
 
 export const externalLinkFormSchema = Yup.object({

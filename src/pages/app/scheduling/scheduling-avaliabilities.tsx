@@ -64,8 +64,7 @@ export function ShedulingAvaliabilities() {
         </Button>
         <Button
           disabled={!hour}
-          // onClick={() => form.setValue("step", step + 1)}
-          onClick={() => form.setValue("step", 9)}
+          onClick={() => form.setValue("step", step + 1)}
           className="col-span-3 gap-2"
         >
           Continuar

@@ -31,6 +31,8 @@ import {
 } from "@/components/ui/dialog";
 import { useRef } from "react";
 import { useDisclosure } from "@/utils/hooks/useDisclosure";
+import { useMutationUpdateServices } from "@/api/services";
+import { useAppContext } from "@/context/app-context";
 
 type SettingsProfileValidationSchema = InferType<
   typeof settingsServicosValidationSchema
@@ -41,6 +43,8 @@ export function SettingsServicesForm({
 }: {
   defaultValues?: SettingsProfileValidationSchema | undefined;
 }) {
+  const { professional } = useAppContext();
+
   const form = useForm<SettingsProfileValidationSchema>({
     resolver: yupResolver(settingsServicosValidationSchema),
     values: {
@@ -49,7 +53,14 @@ export function SettingsServicesForm({
     },
   });
 
+  const { mutate } = useMutationUpdateServices();
+
   const onSubmit = (values: SettingsProfileValidationSchema) => {
+    mutate({
+      id: professional._id,
+      services: [...professional.services, values],
+    });
+
     console.log("🚀 ~ onSubmit ~ values:", values);
     return;
   };
@@ -73,7 +84,7 @@ export function SettingsServicesForm({
           className="flex h-full w-full flex-col gap-6 overflow-auto px-8"
         >
           <div className="space-y-2">
-            <InputForm name="name" label="Nome completo" />
+            <InputForm name="title" label="Nome completo" />
 
             <TextareaForm name="description" label="Descrição" />
 
@@ -100,7 +111,12 @@ export function SettingsServicesForm({
             <InputCurrency name="value" label="Valor do serviço" />
 
             <div className="flex gap-2 pt-2">
-              <Checkbox className="mt-1" id="paymentRequired" />
+              <Checkbox
+                onCheckedChange={(e) => form.setValue("advancePayment", !!e)}
+                checked={form.watch("advancePayment")}
+                className="mt-1"
+                id="paymentRequired"
+              />
               <div className="space-y-1">
                 <Label htmlFor="paymentRequired">
                   Exigir pagamento antecipado

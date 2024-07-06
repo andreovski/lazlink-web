@@ -63,7 +63,6 @@ const InputForm = ({
     name,
     defaultValue: "",
   });
-    console.log("🚀 ~ name:", name, error);
 
   return (
     <div className={cn("w-full space-y-1", className)}>

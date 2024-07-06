@@ -5,15 +5,15 @@ import {
   DrawerContent,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { InputForm } from "@/components/ui/input";
+import { Input, InputForm } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { TextareaForm } from "@/components/ui/textarea";
 import { Xyz } from "@/utils/xyz";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Label } from "@radix-ui/react-label";
-import React, { useState } from "react";
-import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import {
   FaAdjust,
   FaChevronRight,
@@ -23,15 +23,24 @@ import {
   FaRegUserCircle,
   FaSave,
   FaTimes,
-  FaTrash,
 } from "react-icons/fa";
 import { settingsProfileValidationSchema } from "./utils";
 import { InferType } from "yup";
 import { InputPhone } from "@/components/ui/input-phone";
 import { SettingsProfileTheme } from "./settings-profile-theme";
 import { SettingsExternalLinks } from "./settings-external-links";
+import { useAppContext } from "@/context/app-context";
+import {
+  queryKeyGetProfessionalById,
+  useMutationPutProfessional,
+} from "@/api/professional";
+import { toast } from "@/components/ui/use-toast";
+import { env } from "@/env";
+import { convertEmptyStringsToNull } from "@/utils";
+import { useQueryClient } from "@tanstack/react-query";
+import { FieldCountryState } from "@/components/fields/field-country-state";
 
-type SettingsProfileValidationSchema = InferType<
+export type SettingsProfileValidationSchema = InferType<
   typeof settingsProfileValidationSchema
 >;
 
@@ -39,14 +48,19 @@ export function SettingsProfile() {
   const [useEnterpriseName, setUseEnterpriseName] = useState(false);
   const [isWhatsApp, setIsWhatsApp] = useState(true);
 
+  const queryClient = useQueryClient();
+  const { professional } = useAppContext();
+
   const form = useForm<SettingsProfileValidationSchema>({
     resolver: yupResolver(settingsProfileValidationSchema),
-    defaultValues: {
-      externalLinks: [],
+    values: {
+      ...professional,
+      isWhatsApp: !!professional.whatsappPhone || true,
     },
   });
 
-  const { formState } = form;
+  const { formState, watch } = form;
+  const appUrl = env.VITE_APP_URL;
 
   const handleCheckChange = (e: boolean) => {
     setUseEnterpriseName(e);
@@ -64,8 +78,20 @@ export function SettingsProfile() {
 
   const showAddres = form.watch("showAddress");
 
-  const onSubmit = (values: SettingsProfileValidationSchema) => {
-    console.log("🚀 ~ onSubmit ~ values:", values);
+  const { mutate } = useMutationPutProfessional({
+    onSuccess: (data: IProfessional) => {
+      queryClient.setQueryData([queryKeyGetProfessionalById, data._id], data);
+      toast({
+        title: "Cadastro alterado com sucesso!",
+        variant: "success",
+      });
+    },
+  });
+
+  const onSubmit = async (values: SettingsProfileValidationSchema) => {
+    const payload = convertEmptyStringsToNull(values);
+
+    await mutate(payload);
     return;
   };
 
@@ -73,7 +99,7 @@ export function SettingsProfile() {
     form.setValue(name, value);
   };
 
-  const errorPhone = formState.errors?.phone;
+  const errorPhone = formState.errors?.cellphone;
   const errorWhatsappPhone = formState.errors?.whatsappPhone;
 
   return (
@@ -90,7 +116,7 @@ export function SettingsProfile() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex w-full flex-col gap-6 overflow-y-auto px-8"
         >
-          <AvatarUpload name="avatar" className="mx-auto h-20 w-20" />
+          <AvatarUpload name="avatarUrl" className="mx-auto h-20 w-20" />
 
           {/* //* basic info  */}
           <div className="space-y-2">
@@ -100,7 +126,7 @@ export function SettingsProfile() {
             </h1>
 
             <InputForm name="name" label="Nome completo" />
-            <InputForm name="work" label="Profissão/Titulo" />
+            <InputForm name="workTitle" label="Profissão/Titulo" />
 
             <div className="flex items-center space-x-2 py-2">
               <Switch
@@ -116,8 +142,13 @@ export function SettingsProfile() {
             <Xyz condition={useEnterpriseName} xyz="fade down duration-3">
               <InputForm name="enterpriseName" label="Nome da empresa" />
             </Xyz>
+            <TextareaForm rows={6} name="about" label="Descrição" />
+            <InputForm name="email" disabled label="E-mail" />
 
-            <TextareaForm name="description" label="Descrição" />
+            <div className="space-y-1">
+              <Label className="text-sm font-medium">URL de perfil</Label>
+              <Input disabled value={appUrl.concat(form.getValues().userUrl)} />
+            </div>
           </div>
 
           <Separator />
@@ -129,15 +160,16 @@ export function SettingsProfile() {
               Informações de contato
             </h1>
 
-            <div className="space-y-2">
-              <Label className="text-sm font-medium" htmlFor="phone">
+            <div className="space-y-1">
+              <Label className="text-sm font-medium" htmlFor="cellphone">
                 Telefone
               </Label>
               <InputPhone
-                id="phone"
-                error={form.formState.errors?.phone}
+                id="cellphone"
+                error={form.formState.errors?.cellphone}
                 defaultCountry="BR"
-                onChange={(e) => handleChangeInputUncontrolled("phone", e)}
+                value={watch("cellphone")}
+                onChange={(e) => handleChangeInputUncontrolled("cellphone", e)}
               />
               {errorPhone?.message && (
                 <p className="text-xs font-medium text-red-600">
@@ -158,13 +190,14 @@ export function SettingsProfile() {
             </div>
 
             <Xyz condition={!isWhatsApp} xyz="fade down duration-3">
-              <div className="space-y-2">
+              <div className="space-y-1">
                 <Label className="text-sm font-medium" htmlFor="whatsappPhone">
                   WhatsApp
                 </Label>
                 <InputPhone
                   id="whatsappPhone"
-                  error={form.formState.errors?.phone}
+                  error={form.formState.errors?.whatsappPhone}
+                  value={watch("whatsappPhone")}
                   defaultCountry="BR"
                   onChange={(e) =>
                     handleChangeInputUncontrolled("whatsappPhone", e)
@@ -199,11 +232,12 @@ export function SettingsProfile() {
               </Label>
             </div>
 
-            <InputForm name="postalCode" label="CEP" />
-            <InputForm name="street" label="Rua/Avenida/etc." />
-            <InputForm name="city" label="Cidade" />
-            <InputForm name="state" label="Estado" />
-            <InputForm name="complement" label="Complemento" />
+            <InputForm name="address.postalCode" label="CEP" />
+            <InputForm name="address.street" label="Rua/Avenida/etc." />
+            <InputForm name="address.city" label="Cidade" />
+            {/* <InputForm name="address.state" label="Estado" /> */}
+            <FieldCountryState name="address.state" />
+            <InputForm name="address.complement" label="Complemento" />
           </div>
 
           <Separator />
@@ -216,14 +250,14 @@ export function SettingsProfile() {
             </h1>
 
             <InputForm
-              name="instagram"
+              name="instagramUrl"
               label="Instagram"
               sublabel="Digite apenas o usuário, sem o @"
             />
-            <InputForm name="linkedIn" label="LinkedIn" />
-            <InputForm name="facebook" label="Facebook" />
+            <InputForm name="linkedInUrl" label="LinkedIn" />
+            <InputForm name="facebookUrl" label="Facebook" />
             <InputForm
-              name="twitter"
+              name="twitterUrl"
               label="Twitter/X"
               sublabel="Digite apenas o usuário, sem o @"
             />
@@ -261,7 +295,11 @@ export function SettingsProfile() {
             <SettingsProfileTheme />
           </div>
 
-          <Button type="submit" className="my-4 flex gap-2">
+          <Button
+            disabled={form.formState.isSubmitting}
+            type="submit"
+            className="my-4 flex gap-2"
+          >
             <FaSave />
             Salvar edições
           </Button>

@@ -17,6 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { UpgradeConfirm } from "../../upgrade/upgrade-confirm";
 import { DialogUpdateConfirm } from "@/components/dialogs/dialog-update-confirm";
+import { useAppContext } from "@/context/app-context";
 
 export function SettingsExternalLinks({
   children,
@@ -48,6 +49,8 @@ export function SettingsExternalLinks({
 }
 
 function SettingsExternalLinksComponent() {
+  const { professional } = useAppContext();
+
   const premiumDialog = useDisclosure({ opened: false });
 
   const form = useForm({
@@ -64,7 +67,7 @@ function SettingsExternalLinksComponent() {
 
   const errors = form.formState.errors?.externalLinks;
 
-  const isUserPremium = false;
+  const isUserPremium = professional.premium;
   const max = isUserPremium ? 5 : 1;
 
   const handleAdd = () => {
@@ -84,6 +87,7 @@ function SettingsExternalLinksComponent() {
         <Button
           variant="outline"
           onClick={handleAdd}
+          disabled={fields.length >= 4}
           className="ml-auto flex gap-2"
         >
           <FaPlus />

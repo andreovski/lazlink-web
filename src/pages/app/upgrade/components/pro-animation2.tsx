@@ -24,8 +24,14 @@ export function ProAnimation2() {
 
   return (
     <div className="container flex flex-col gap-2 rounded rounded-r-none">
-      <h1 className="text-3xl font-semibold text-white">Premium</h1>
-      <p className={`text-1xl ${font} font-medium text-white`}>André Luiz</p>
+      <h1 className="text-[1.4rem] font-semibold text-white md:text-3xl">
+        Premium
+      </h1>
+      <p
+        className={`md:text-1xl text-md text-center ${font} font-medium text-white`}
+      >
+        André Luiz
+      </p>
     </div>
   );
 }

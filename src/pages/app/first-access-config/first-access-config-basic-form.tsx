@@ -13,10 +13,14 @@ import { Xyz } from "@/utils/xyz";
 import { InferType } from "yup";
 
 import { validateSchemaBasicForm } from "./utils";
+import AvatarUpload from "@/components/ui/avatarUpload";
+import { useLocation } from "react-router-dom";
 
 type UserAccessConfigSchema = InferType<typeof validateSchemaBasicForm>;
 
 export function FirtsAccessConfigBasicForm() {
+  const { state } = useLocation();
+
   const [useEnterpriseName, setUseEnterpriseName] = useState(false);
 
   const formContext = useFormContext();
@@ -24,8 +28,10 @@ export function FirtsAccessConfigBasicForm() {
     resolver: yupResolver(validateSchemaBasicForm),
     defaultValues: {
       enterpriseName: "",
-      name: "",
+      name: state.name,
+      avatarUrl: state?.photo,
       useEnterpriseName: false,
+      email: state.email,
     },
   });
 
@@ -48,27 +54,40 @@ export function FirtsAccessConfigBasicForm() {
     formContext.setValue("step", 1);
   };
 
+  const [isEnterpriseName, name, enterpriseName] = form.watch([
+    "useEnterpriseName",
+    "name",
+    "enterpriseName",
+  ]);
+
   return (
     <FormProvider {...form}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-full flex-col space-y-8"
+        className="flex w-full flex-col space-y-4 md:space-y-8"
       >
-        <h1 className="text-4xl font-extrabold">Vamos nos conhecer melhor</h1>
+        <h1 className="text-2xl font-extrabold md:text-4xl">
+          Vamos nos conhecer melhor
+        </h1>
         <p>
           Confirme se está tudo certo com o seu nome, é assim que vamos te
           chamar:
         </p>
 
-        <div className="space-y-2">
-          <InputForm
-            id="name"
-            name="name"
-            label="Nome completo"
-            type="text"
-            placeholder="Digite seu nome"
-          />
+        <div className="flex items-center gap-x-3">
+          <AvatarUpload className="h-16 w-16" name="avatarUrl" />
+          <h1 className="text-lg font-semibold">
+            {isEnterpriseName ? enterpriseName : name}
+          </h1>
         </div>
+
+        <InputForm
+          id="name"
+          name="name"
+          label="Nome completo"
+          type="text"
+          placeholder="Digite seu nome"
+        />
 
         <div className="flex items-center space-x-2">
           <Switch
@@ -83,7 +102,6 @@ export function FirtsAccessConfigBasicForm() {
 
         <Xyz
           condition={useEnterpriseName}
-          className="space-y-2"
           apper="true"
           xyz="fade down duration-3"
         >
@@ -97,7 +115,11 @@ export function FirtsAccessConfigBasicForm() {
           />
         </Xyz>
 
-        <div className="absolute bottom-10 right-0 flex w-full flex-col items-center gap-4 px-8 text-center md:px-0">
+        <InputForm name="email" label="E-mail" disabled />
+
+        <div className="h-[90px]" />
+
+        <div className="fixed bottom-4 right-0 flex w-full flex-col items-center gap-4 px-8 text-center md:bottom-10 md:px-0">
           <Button type="submit" className="flex w-full gap-3 sm:w-[380px]">
             Continuar
             <FaArrowRight />

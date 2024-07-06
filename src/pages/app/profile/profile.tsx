@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { FaArrowCircleUp, FaClock, FaCog, FaEdit } from "react-icons/fa";
 import { Brand } from "@/components/ui/brand";
-import { ThemeDefault } from "./themes/theme-default";
-import { ThemeAlternative } from "./themes/theme-alternative";
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
 import {
   SettingsProfile,
@@ -10,23 +8,75 @@ import {
   SettingsServicos,
 } from "../settings";
 import { Upgrade } from "../upgrade";
-
-const themeComponent: { [key: string]: React.ReactElement } = {
-  default: <ThemeDefault />,
-  alternative: <ThemeAlternative />,
-};
+import { useAppContext } from "@/context/app-context";
+import { ProfileInfo } from "./profile-info";
+import { ProfileServices } from "./profile-services";
 
 export function Profile() {
-  const isPremiumUser = false;
-  const userTheme = "default";
+  const { isAuthenticated } = useAppContext();
+
+  return (
+    <div className="flex flex-col">
+      {!isAuthenticated ? (
+        <ProfileNotAuthenticated />
+      ) : (
+        <ProfileAuthenticated />
+      )}
+    </div>
+  );
+}
+
+function ProfileNotAuthenticated() {
+  const { professional } = useAppContext();
+
+  const isPremiumUser = professional?.premium;
+
+  const contentH = isPremiumUser ? "md:h-screen" : "md:h-[91dvh]";
+
+  return (
+    <>
+      <div
+        className={`overflow-y-auto ${contentH} relative flex w-full flex-wrap justify-center gap-6 bg-background px-7 pt-8 md:justify-start md:px-24 md:pt-16`}
+      >
+        <div className="flex flex-col gap-4 md:flex-1">
+          <ProfileInfo />
+        </div>
+        <div className="flex md:flex-1">
+          <ProfileServices />
+        </div>
+      </div>
+
+      {!isPremiumUser && (
+        <div className={`flex w-full flex-col md:h-[8dvh]`}>
+          <Brand />
+        </div>
+      )}
+    </>
+  );
+}
+
+function ProfileAuthenticated() {
+  const { professional } = useAppContext();
+
+  const isPremiumUser = professional?.premium;
+  // const userTheme = professional?.theme.profile || "default";
 
   const contentH = isPremiumUser ? "md:h-[91dvh]" : "md:h-[85dvh]";
   const footerH = isPremiumUser ? "md:h-[8dvh]" : "md:h-[15dvh]";
 
+  const professionalServices = professional?.services;
+
   return (
-    <div className="flex flex-col">
-      <div className={`overflow-y-auto ${contentH}`}>
-        {themeComponent[userTheme]}
+    <>
+      <div
+        className={`overflow-y-auto ${contentH} relative flex w-full flex-wrap justify-center gap-6 bg-background px-7 pt-8 md:justify-start md:px-24 md:pt-16`}
+      >
+        <div className="flex flex-col gap-4 md:flex-1">
+          <ProfileInfo />
+        </div>
+        <div className="flex md:flex-1">
+          <ProfileServices />
+        </div>
       </div>
 
       <div className={`flex w-full flex-col ${footerH}`}>
@@ -58,7 +108,9 @@ export function Profile() {
             <DrawerTrigger asChild>
               <Button className="flex w-[48%] gap-2 md:flex-1">
                 <FaCog />
-                Editar Serviços
+                {professionalServices.length
+                  ? "Editar Serviços"
+                  : "Adicionar Serviços"}
               </Button>
             </DrawerTrigger>
 
@@ -78,6 +130,6 @@ export function Profile() {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
-}
+};

@@ -10,37 +10,35 @@ import { Error404 } from "@/components/error/404";
 export const authRoutes = createBrowserRouter([
   //* Authenticated routes
   {
-    path: "/",
-    element: <Outlet />,
+    path: "/:username",
+    element: <Profile />,
     errorElement: <Error404 />,
-    children: [
-      {
-        path: "/",
-        element: <Profile />,
-      },
-    ],
   },
   {
-    path: "/",
+    path: "/acesso/config",
     element: <BrandHeader />,
     errorElement: <Error404 />,
     children: [
       {
-        path: "/acesso/config",
+        path: "",
         element: <FirstAccessConfig />,
       },
     ],
   },
   //* Auth routes
   {
-    path: "/",
+    path: "/login",
     element: <BrandHeader />,
     errorElement: <Error404 />,
     children: [
       {
-        path: "/login",
+        path: "",
         element: <SignIn />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <Error404 />,
   },
 ]);

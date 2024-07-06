@@ -1,5 +1,9 @@
 {
-  "extends": ["@rocketseat/eslint-config/react", "prettier"],
+  "extends": [
+    "@rocketseat/eslint-config/react",
+    "prettier",
+    "@tanstack/eslint-plugin-query"
+  ],
   "plugins": ["simple-import-sort"],
   "rules": {
     "simple-import-sort/imports": "warn",

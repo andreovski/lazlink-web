@@ -10,9 +10,10 @@ const AvatarUpload = ({
   className?: string;
   name: string;
 }) => {
-  const [avatar, setAvatar] = useState<string | null>(null);
-
   const form = useFormContext();
+  const { avatarUrl } = form.getValues();
+
+  const [avatar, setAvatar] = useState<string | null>(avatarUrl);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

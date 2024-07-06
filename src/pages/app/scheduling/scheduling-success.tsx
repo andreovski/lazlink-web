@@ -1,14 +1,8 @@
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { TextClamped } from "@/components/ui/text-clamped";
 import { format, toZonedTime } from "date-fns-tz";
 import { useFormContext } from "react-hook-form";
 import {
-  FaApple,
   FaCalendar,
   FaCheckCircle,
   FaClock,
@@ -21,7 +15,6 @@ export function SchedulingSuccess() {
 
   // TODO: FIX HOUR
   const [date, hour] = form.watch(["date", "hour"]);
-  console.log("🚀 ~ SchedulingSuccess ~ hour:", hour);
 
   const formattedDate = format(
     toZonedTime(new Date(date).setHours(hour), "UTC"),

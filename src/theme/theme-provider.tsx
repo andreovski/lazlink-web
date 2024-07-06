@@ -6,8 +6,7 @@ type Theme = AppThemes;
 
 type ThemeProviderProps = {
   children: React.ReactNode;
-  defaultTheme?: Theme;
-  storageKey?: string;
+  defaultTheme?: ITheme;
 };
 
 type ThemeProviderState = {
@@ -15,6 +14,9 @@ type ThemeProviderState = {
   setTheme: (theme: Theme) => void;
   fontTheme: ThemeFonts;
   setFontTheme: (font: ThemeFonts) => void;
+  profileTheme: string;
+  setProfileTheme: (profile: string) => void;
+  isDarkTheme: boolean;
 };
 
 const ThemeProviderContext = createContext<ThemeProviderState>(
@@ -23,28 +25,27 @@ const ThemeProviderContext = createContext<ThemeProviderState>(
 
 export function ThemeProvider({
   children,
-  defaultTheme = "default",
-  storageKey = "vite-ui-theme",
+  defaultTheme,
   ...props
 }: ThemeProviderProps) {
-  const [fontFamily, setFontFamily] = useState<ThemeFonts>(
-    () =>
-      (localStorage.getItem(`${storageKey}/font`) as ThemeFonts) ||
-      "font-serif",
+  const [fontFamily, setFontFamily] = useState<ThemeFonts>(defaultTheme!.font);
+  const [theme, setTheme] = useState<Theme>(defaultTheme!.color);
+  const [profileTheme, setProfileTheme] = useState<string>(
+    defaultTheme!.profile,
   );
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
-  );
-  console.log("🚀 ~ theme:", theme);
+
+  useEffect(() => {
+    setProfileTheme(defaultTheme!.profile);
+    setTheme(defaultTheme!.color);
+    setFontFamily(defaultTheme!.font);
+  }, [defaultTheme]);
 
   // * Fonts
   const handleSetFontTheme = (font: ThemeFonts) => {
-    localStorage.setItem(storageKey, theme);
     setFontFamily(font);
   };
 
   const handleSetTheme = (theme: Theme) => {
-    localStorage.setItem(`${storageKey}/font`, fontFamily);
     setTheme(theme);
   };
 
@@ -68,6 +69,8 @@ export function ThemeProvider({
     root.classList.add(theme);
   }, [theme]);
 
+  const isDarkTheme = theme.includes("dark");
+
   return (
     <ThemeProviderContext.Provider
       {...props}
@@ -76,6 +79,9 @@ export function ThemeProvider({
         theme,
         fontTheme: fontFamily,
         setFontTheme: handleSetFontTheme,
+        profileTheme,
+        setProfileTheme,
+        isDarkTheme,
       }}
     >
       {children}

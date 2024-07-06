@@ -21,12 +21,13 @@ import { SchedulingError } from "./scheduling-error";
 
 type Props = {
   children: React.ReactNode;
+  service: IService;
 };
 
 type SchedulingSchema = InferType<typeof validationSchema>;
 
-export function Scheduling({ children }: Props) {
-  const serviceName = "Programação web";
+export function Scheduling({ children, service }: Props) {
+  const serviceName = service.name;
 
   const form = useForm<SchedulingSchema>({
     resolver: yupResolver(validationSchema),
@@ -66,14 +67,7 @@ export function Scheduling({ children }: Props) {
             {step === 0 && (
               <div className="flex h-full flex-col">
                 <div className="space-y-4">
-                  <p>
-                    Descrição do serviço ofertado, sem truncamento do texto.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Descrição do serviço ofertado,
-                  </p>
+                  <p>{service.description}</p>
                   <p className="flex gap-2">
                     Valor do serviço:{" "}
                     <p className="text-md font-semibold">R$ 99,90</p>

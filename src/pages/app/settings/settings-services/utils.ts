@@ -1,12 +1,13 @@
 import * as Yup from "yup";
 
 export const settingsServicosValidationSchema = Yup.object({
-  name: Yup.string().required("Esse campo é obrigatório ser informado"),
+  title: Yup.string().required("Esse campo é obrigatório ser informado"),
   description: Yup.string()
     .max(1000, "Limite de texto excedido")
     .required("Informe uma descrição para o serviço"),
   serviceTime: Yup.string().required("Esse campo é obrigatório ser informado"),
   value: Yup.string().required("Esse campo é obrigatório ser informado"),
+  advancePayment: Yup.boolean().required("Esse campo é obrigatório"),
 });
 
 export const serviceTimeValues = [

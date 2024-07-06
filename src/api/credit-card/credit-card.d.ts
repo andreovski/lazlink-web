@@ -1,0 +1,3 @@
+interface ICreditCard {
+  cardId: string;
+}

@@ -16,12 +16,12 @@ import {
   FaSave,
   FaTimes,
 } from "react-icons/fa";
-import { ThemeDefaultProfile } from "../../profile/themes/theme-default/theme-default-profile";
+import { ProfileInfo } from "../../profile/profile-info";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useTheme } from "@/theme/theme-provider";
 import { ThemeFonts, themeFonts } from "@/theme/fonts/theme-fonts";
 import { useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import {
   Popover,
   PopoverContent,
@@ -29,10 +29,20 @@ import {
 } from "@/components/ui/popover";
 import { useDisclosure } from "@/utils/hooks/useDisclosure";
 import { DialogUpdateConfirm } from "@/components/dialogs/dialog-update-confirm";
+import { useAppContext } from "@/context/app-context";
+import {
+  queryKeyGetProfessionalById,
+  useMutationPutProfessional,
+} from "@/api/professional";
+import { SettingsProfileValidationSchema } from ".";
+import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "@/components/ui/use-toast";
+import { convertEmptyStringsToNull } from "@/utils";
 
 type FormData = {
-  theme: AppThemes;
-  fontTheme: ThemeFonts;
+  color: AppThemes;
+  font: ThemeFonts;
+  profile: string;
 };
 
 export function SettingsProfileTheme() {
@@ -73,23 +83,29 @@ export function SettingsProfileTheme() {
 }
 
 function SettingsProfileThemeContent({ onClose }: { onClose: () => void }) {
+  const { professional } = useAppContext();
+
   const premiumDialog = useDisclosure({ opened: false });
-  const { theme, setTheme, setFontTheme, fontTheme } = useTheme();
+  const { theme, setTheme, setFontTheme, fontTheme, profileTheme } = useTheme();
 
   const initialTheme = useRef(theme);
   const initialFontTheme = useRef(fontTheme);
 
+  const queryClient = useQueryClient();
+  const formContext = useFormContext<SettingsProfileValidationSchema>();
+
   const form = useForm<FormData>({
     defaultValues: {
-      theme,
-      fontTheme,
+      font: fontTheme,
+      color: theme,
+      profile: profileTheme,
     },
   });
 
-  const [themeValue, fontThemeValue] = form.watch(["theme", "fontTheme"]);
+  const [themeValue, fontThemeValue] = form.watch(["color", "font"]);
 
   const userName = "André Luiz";
-  const userIsPremium = true;
+  const userIsPremium = professional.premium;
 
   const isEdited =
     initialTheme.current !== theme || initialFontTheme.current !== fontTheme;
@@ -101,10 +117,22 @@ function SettingsProfileThemeContent({ onClose }: { onClose: () => void }) {
     onClose();
   };
 
-  const onSubmit = (v: any) => {
-    console.log("🚀 ~ onSubmit ~ v:", v);
-    const { isPremium: isThemePremium } = themeColors[v.theme];
-    const { isPremium: isFontPremium } = themeFonts[v.fontTheme];
+  const { mutate } = useMutationPutProfessional({
+    onSuccess: (data) => {
+      formContext.setValue("theme", data.theme);
+      queryClient.setQueryData([queryKeyGetProfessionalById, data._id], data);
+
+      toast({
+        title: "Tema alterado com sucesso!",
+        variant: "success",
+      });
+      onClose();
+    },
+  });
+
+  const onSubmit = (v: FormData) => {
+    const { isPremium: isThemePremium } = themeColors[v.color];
+    const { isPremium: isFontPremium } = themeFonts[v.font];
 
     const isThemeOrFontPremium = isThemePremium || isFontPremium;
 
@@ -112,9 +140,12 @@ function SettingsProfileThemeContent({ onClose }: { onClose: () => void }) {
       return premiumDialog.open();
     }
 
-    // TODO: endpoint
+    const valuesFormContext = convertEmptyStringsToNull(formContext.getValues());
 
-    return onClose();
+    return mutate({
+      ...valuesFormContext,
+      theme: v,
+    });
   };
 
   return (
@@ -130,12 +161,15 @@ function SettingsProfileThemeContent({ onClose }: { onClose: () => void }) {
         )}
       </div>
 
-      <form onSubmit={form.handleSubmit(onSubmit)} className="overflow-auto">
+      <form
+        onSubmit={(e) => [form.handleSubmit(onSubmit)(e), e.stopPropagation()]}
+        className="overflow-auto"
+      >
         <div className="m-4 my-1 flex flex-col gap-6">
           <div className="flex flex-col gap-2 bg-background py-2">
             <p className="font-medium">Pré-visualização</p>
             <div className="pointer-events-none flex flex-col gap-4 rounded-md border border-input p-4 md:flex-1">
-              <ThemeDefaultProfile />
+              <ProfileInfo />
             </div>
           </div>
 
@@ -157,7 +191,7 @@ function SettingsProfileThemeContent({ onClose }: { onClose: () => void }) {
                   value={name}
                   onClick={() => [
                     setTheme(name as AppThemes),
-                    form.setValue("theme", name as AppThemes),
+                    form.setValue("color", name as AppThemes),
                   ]}
                   className="h-12 justify-between p-2"
                 >
@@ -191,7 +225,7 @@ function SettingsProfileThemeContent({ onClose }: { onClose: () => void }) {
                   value={name}
                   onClick={() => [
                     setFontTheme(name as ThemeFonts),
-                    form.setValue("fontTheme", name as ThemeFonts),
+                    form.setValue("font", name as ThemeFonts),
                   ]}
                   className={`${name} h-12 justify-between gap-4 p-4`}
                 >
@@ -206,7 +240,11 @@ function SettingsProfileThemeContent({ onClose }: { onClose: () => void }) {
         </div>
 
         <div className="mb-2 p-3">
-          <Button type="submit" className="flex w-full gap-2">
+          <Button
+            disabled={form.formState.isSubmitting}
+            type="submit"
+            className="flex w-full gap-2"
+          >
             <FaSave />
             Salvar tema
           </Button>

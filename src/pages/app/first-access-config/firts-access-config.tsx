@@ -7,15 +7,31 @@ import { FirtsAccessConfigUrlForm } from "./first-access-config-url-form";
 import { FirstAccessConfigThemeForm } from "./first-access-config-theme-form";
 import { FaArrowRight, FaCheckCircle } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
+import { useAppContext } from "@/context/app-context";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function FirstAccessConfig() {
+  const { isAuthenticated } = useAppContext();
+
+  const navigate = useNavigate();
+  const { state } = useLocation();
+
   const form = useForm({
-    defaultValues: {
+    values: {
       step: 0,
     },
   });
 
   const step = form.watch("step");
+
+  useEffect(() => {
+    if (!isAuthenticated || !state) {
+      navigate("/login", {
+        replace: true,
+      });
+    }
+  }, [isAuthenticated]);
 
   return (
     <FormProvider {...form}>

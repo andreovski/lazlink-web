@@ -1,12 +1,36 @@
 import { Button } from "@/components/ui/button";
+import { useAppContext } from "@/context/app-context";
+import { useGoogleLogin } from "@react-oauth/google";
+import { useState } from "react";
 
-import { FaExclamationCircle, FaGoogle } from "react-icons/fa";
+import { FaExclamationCircle, FaGoogle, FaSpinner } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export function SignIn() {
+  const [hasError, setHasError] = useState(false);
+  const [isLogginIn, setIsLogginIn] = useState(false);
+
+  const { handleGoogleLogin } = useAppContext();
+
   const navigate = useNavigate();
 
-  const hasError = false;
+  const login = useGoogleLogin({
+    onNonOAuthError: () => setIsLogginIn(false),
+    onSuccess: async (tokenResponse) => {
+      const data = await handleGoogleLogin(tokenResponse.access_token);
+
+      if (data) {
+        navigate("/acesso/config", {
+          state: {
+            ...data,
+          },
+          replace: true,
+        });
+      }
+      setIsLogginIn(false);
+    },
+    onError: () => [setHasError(true), setIsLogginIn(false)],
+  });
 
   return (
     <div className="relative mx-auto flex h-[90vh] w-full max-w-[765px] flex-col gap-8 px-8 py-5 md:px-0">
@@ -20,15 +44,14 @@ export function SignIn() {
           </p>
         </>
       )}
-
       {hasError && <SignInError />}
-
       <div className="absolute bottom-6 right-0 flex w-full flex-col items-center gap-4 px-8 text-center md:px-0">
         <Button
-          onClick={() => navigate("/acesso/config")}
+          onClick={() => [login(), setIsLogginIn(true)]}
           className="flex w-64 gap-3"
+          disabled={isLogginIn}
         >
-          <FaGoogle />
+          {isLogginIn ? <FaSpinner className="animate-spin" /> : <FaGoogle />}
           Entrar com Google
         </Button>
         <p className="text-sm">
