@@ -1,4 +1,5 @@
 interface IService {
+  _id: string;
   title: string;
   description: string;
   serviceTime: string;
@@ -7,6 +8,7 @@ interface IService {
   advancePayment: boolean;
 }
 
+//! REMOVE 
 interface IServiceUpdate {
   id: string;
   services: IService[];
