@@ -86,5 +86,6 @@
         totalCount: number; // Total de itens
         totalPages: number; // Total de páginas
     ```
+- Verificar como será feito o upload de imagens
 
 
