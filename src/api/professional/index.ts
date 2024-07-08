@@ -1,20 +1,20 @@
 import { api } from "@/lib/axios";
 import {
+  InvalidateQueryFilters,
   MutationOptions,
   QueryKey,
-  QueryOptions,
   UseMutationResult,
   UseQueryResult,
   useMutation,
   useQuery,
 } from "@tanstack/react-query";
-import { IResponseList, ParamsPagination } from "../utils";
+import { IResponseList, ParamsPagination, QueryOptions } from "../utils";
 import { SettingsProfileValidationSchema } from "@/pages/app/settings";
 
 export const queryKeyGetProfessionals = "professionals";
 export const useQueryGetProfessionals = (
   params?: ParamsPagination,
-  config?: QueryOptions,
+  config?: QueryOptions<IResponseList<IProfessional[]>>,
 ) =>
   useQuery({
     queryKey: [queryKeyGetProfessionals, params],
@@ -36,7 +36,7 @@ export const useQueryGetProfessionals = (
 export const queryKeyGetProfessionalById = "professionalsById";
 export const useQueryGetProfessionalById = (
   params: { id: string },
-  config?: QueryOptions,
+  config?: QueryOptions<IProfessional>,
 ): UseQueryResult<IProfessional> =>
   useQuery({
     queryKey: [queryKeyGetProfessionalById, params.id],

@@ -26,6 +26,7 @@
     }
   ```
 - Remover a obrigatoriedade dos campos ```scheludeCount```e ```indicatedBy```.
+- Campo ```avatarUrl``` não está sendo setado o valor passado
 - Adicionar o campo ```complement``` drento de ```Address```
   ```ts
   interface IAddress {
@@ -69,6 +70,7 @@
 - Endpoint que busque os dados **não sensiveis** do profissional pelo username. O username será contido na url do profissional.
 - Endpoint que traga os dados do profissional pelo ```googleId```, visto que a autenticação será feito pelo googleId. 
 - Endpoint que faça a atualização do campo ```externalLinks``` do profissional.
+- Endpoint para validar a disponibilidade do username escolhido
 
 **⚠️ Algumas Observações**
 - Paginação no retorno de listagens. Hoje vem na estrutura de 

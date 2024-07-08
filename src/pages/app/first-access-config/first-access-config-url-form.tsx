@@ -11,7 +11,7 @@ import { InferType } from "yup";
 
 type UserAccessConfigSchema = InferType<typeof validateSchemaUrlForm>;
 
-export function FirtsAccessConfigUrlForm() {
+export function FirstAccessConfigUrlForm() {
   const formContext = useFormContext();
   const form = useForm<UserAccessConfigSchema>({
     resolver: yupResolver(validateSchemaUrlForm),
@@ -24,7 +24,7 @@ export function FirtsAccessConfigUrlForm() {
     for (const [key, value] of Object.entries(formValues)) {
       formContext.setValue(key, value);
     }
-    formContext.setValue("step", 2);
+    formContext.setValue("step", 3);
   };
 
   return (
@@ -40,7 +40,11 @@ export function FirtsAccessConfigUrlForm() {
 
         <div className="space-y-1">
           <Label className="text-xs font-medium">lazlink.com/</Label>
-          <InputForm name="url" type="text" placeholder="fulano_silva_sauro" />
+          <InputForm
+            name="userUrl"
+            type="text"
+            placeholder="fulano_silva_sauro"
+          />
           <p className="pt-2 text-xs text-neutral-600">
             Você pode usar letras, números e underline (_).
           </p>

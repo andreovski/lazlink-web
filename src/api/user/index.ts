@@ -1,11 +1,11 @@
 import { api } from "@/lib/axios";
-import { QueryOptions, useQuery } from "@tanstack/react-query";
-import { IResponseList, ParamsPagination } from "../utils";
+import { useQuery } from "@tanstack/react-query";
+import { IResponseList, ParamsPagination, QueryOptions } from "../utils";
 
 export const queryKeyGetUsers = "users";
 export const useQueryGetUsers = (
   params?: ParamsPagination,
-  config?: QueryOptions,
+  config?: QueryOptions<IResponseList<IUser[]>>,
 ) =>
   useQuery({
     queryKey: [queryKeyGetUsers, params],
@@ -24,14 +24,12 @@ export const useQueryGetUsers = (
 export const queryKeyGetUserById = "usersById";
 export const useQueryGetUserById = (
   params: { id: string },
-  config?: QueryOptions,
+  config?: QueryOptions<IUser>,
 ) =>
   useQuery({
     queryKey: [queryKeyGetUsers, params],
     queryFn: async () => {
-      const { data } = await api.get<IResponseList<IUser>>(
-        `/users/${params.id}`,
-      );
+      const { data } = await api.get<IUser>(`/users/${params.id}`);
       return data;
     },
     ...config,

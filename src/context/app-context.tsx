@@ -29,16 +29,21 @@ export function AppProvider({ children }: { children?: React.ReactNode }) {
     null | string
   >(null);
 
+  const isAuthenticated = true;
+
   const {
     data: professional = defaultProfessionalValue,
     isLoading: isLoadingProfessional,
     isError,
     error,
-  } = useQueryGetProfessionalById({
-    id: "6681fcae392b3ef73236f87f",
-  });
-
-  const isAuthenticated = !!userGoogleAccessToken;
+  } = useQueryGetProfessionalById(
+    {
+      id: "6681fcae392b3ef73236f87f",
+    },
+    {
+      enabled: !!isAuthenticated,
+    },
+  );
 
   if (isError) {
     console.log("Error: ", error);
@@ -57,11 +62,16 @@ export function AppProvider({ children }: { children?: React.ReactNode }) {
     }
   };
 
+  const professionalintedn = {
+    ...professional,
+    premium: true,
+  };
+
   return (
     <AppContext.Provider
       value={{
         isAuthenticated,
-        professional,
+        professional: professionalintedn,
         isLoadingProfessional,
         userGoogleAccessToken,
         handleGoogleLogin,

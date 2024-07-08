@@ -6,9 +6,11 @@ import { useFormContext } from "react-hook-form";
 const AvatarUpload = ({
   className = "",
   name,
+  disabled,
 }: {
   className?: string;
   name: string;
+  disabled?: boolean;
 }) => {
   const form = useFormContext();
   const { avatarUrl } = form.getValues();
@@ -35,7 +37,7 @@ const AvatarUpload = ({
       <label htmlFor="avatar-input">
         <Avatar className={className}>
           <AvatarImage
-            className="cursor-pointer"
+            className={!disabled ? "cursor-pointer" : ""}
             src={avatar || ""}
             alt="User Avatar"
           />
@@ -44,13 +46,15 @@ const AvatarUpload = ({
           </AvatarFallback>
         </Avatar>
       </label>
-      <input
-        id="avatar-input"
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        style={{ display: "none" }}
-      />
+      {!disabled && (
+        <input
+          id="avatar-input"
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          style={{ display: "none" }}
+        />
+      )}
     </div>
   );
 };

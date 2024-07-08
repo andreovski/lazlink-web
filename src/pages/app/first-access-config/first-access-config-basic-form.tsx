@@ -18,7 +18,7 @@ import { useLocation } from "react-router-dom";
 
 type UserAccessConfigSchema = InferType<typeof validateSchemaBasicForm>;
 
-export function FirtsAccessConfigBasicForm() {
+export function FirstAccessConfigBasicForm() {
   const { state } = useLocation();
 
   const [useEnterpriseName, setUseEnterpriseName] = useState(false);
@@ -28,10 +28,10 @@ export function FirtsAccessConfigBasicForm() {
     resolver: yupResolver(validateSchemaBasicForm),
     defaultValues: {
       enterpriseName: "",
-      name: state.name,
+      name: state?.name,
       avatarUrl: state?.photo,
       useEnterpriseName: false,
-      email: state.email,
+      email: state?.email || "andre@andre.com",
     },
   });
 
