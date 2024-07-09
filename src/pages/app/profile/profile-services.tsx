@@ -11,26 +11,38 @@ import { NothingToShowIll } from "@/assets/nothing-to-show-ill";
 export function ProfileServices() {
   const { isLoadingProfessional, professional } = useAppContext();
 
-  const services = professional.services;
+  const services: IService[] = [
+    {
+      _id: "2112",
+      title: "Servico 3",
+      description: "minha description",
+      value: 12.4,
+      serviceTime: "01:30",
+      advancePayment: false,
+    },
+  ];
 
   return (
-    <div className="flex flex-col gap-8 pb-4 md:gap-12">
+    <div className="flex w-full flex-col gap-8 pb-4 md:gap-12">
       <h1 className="flex text-xl font-semibold">Serviços</h1>
 
-      <div className="flex flex-col gap-3">
+      <div className="flex w-full flex-col gap-3">
         <div className="flex max-h-[500px] flex-col gap-3 overflow-auto">
           {isLoadingProfessional ? (
             <SkeletonServices />
           ) : services.length ? (
             services.map((service, idx) => (
-              <div key={idx} className="flex items-start gap-2">
-                <div className="">
-                  <h1 className="text-lg font-medium">{service.name}</h1>
+              <div
+                key={idx}
+                className="flex w-full items-start justify-between gap-2"
+              >
+                <div className="flex flex-1 flex-col">
+                  <h1 className="text-lg font-medium">{service.title}</h1>
                   <TextClamped lines={3}>{service.description}</TextClamped>
 
                   <p className="flex justify-end gap-1">
                     <p className="text-sm">R$</p>
-                    {service.value.toLocaleString("ptBR")}
+                    {service.value.toFixed(2)}
                   </p>
                 </div>
 

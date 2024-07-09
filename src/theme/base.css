@@ -34,6 +34,7 @@
   --radius: 0.5rem;
 
   --linear-bg-white: linear-gradient(0deg, rgba(0,0,0,0.8407738095238095) 0%, rgba(0,0,0,0) 80%);
+  --brand: #259688
 }
 
 .dark {

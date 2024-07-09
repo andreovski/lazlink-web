@@ -20,9 +20,11 @@ import {
   FaClipboardList,
   FaHashtag,
   FaLink,
+  FaPaste,
   FaRegUserCircle,
   FaSave,
   FaTimes,
+  FaUserFriends,
 } from "react-icons/fa";
 import { settingsProfileValidationSchema } from "./utils";
 import { InferType } from "yup";
@@ -39,6 +41,7 @@ import { env } from "@/env";
 import { convertEmptyStringsToNull } from "@/utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { FieldCountryState } from "@/components/fields/field-country-state";
+import { useCopyClipboard } from "@/utils/hooks/useCopyClipboard";
 
 export type SettingsProfileValidationSchema = InferType<
   typeof settingsProfileValidationSchema
@@ -50,6 +53,7 @@ export function SettingsProfile() {
 
   const queryClient = useQueryClient();
   const { professional } = useAppContext();
+  const { onCopy } = useCopyClipboard();
 
   const form = useForm<SettingsProfileValidationSchema>({
     resolver: yupResolver(settingsProfileValidationSchema),
@@ -101,6 +105,7 @@ export function SettingsProfile() {
 
   const errorPhone = formState.errors?.cellphone;
   const errorWhatsappPhone = formState.errors?.whatsappPhone;
+  const userUrl = appUrl.concat(`/${form.getValues().userUrl}`);
 
   return (
     <DrawerContent>
@@ -145,9 +150,16 @@ export function SettingsProfile() {
             <TextareaForm rows={6} name="about" label="Descrição" />
             <InputForm name="email" disabled label="E-mail" />
 
-            <div className="space-y-1">
+            <div className="relative space-y-1">
               <Label className="text-sm font-medium">URL de perfil</Label>
-              <Input disabled value={appUrl.concat(form.getValues().userUrl)} />
+              <Input disabled value={userUrl} />
+              <Button
+                className="absolute right-[0.14rem] top-[1.63rem] h-8 rounded-sm"
+                variant="ghost"
+                onClick={() => onCopy(userUrl)}
+              >
+                <FaPaste />
+              </Button>
             </div>
           </div>
 
@@ -261,6 +273,17 @@ export function SettingsProfile() {
               label="Twitter/X"
               sublabel="Digite apenas o usuário, sem o @"
             />
+          </div>
+
+          <Separator />
+
+          <div className="space-y-2">
+            <h1 className="flex items-center gap-2 font-semibold">
+              <FaUserFriends className="text-lg" />
+              Indicação
+            </h1>
+
+            <InputForm name="recommendation" label="E-mail de indicação" />
           </div>
 
           <Separator />

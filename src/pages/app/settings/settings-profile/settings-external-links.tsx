@@ -87,7 +87,7 @@ function SettingsExternalLinksComponent() {
         <Button
           variant="outline"
           onClick={handleAdd}
-          disabled={fields.length >= 4}
+          disabled={fields.length >= 5}
           className="ml-auto flex gap-2"
         >
           <FaPlus />

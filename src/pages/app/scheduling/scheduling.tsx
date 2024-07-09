@@ -18,6 +18,7 @@ import { InferType } from "yup";
 import { validationSchema } from "./utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SchedulingError } from "./scheduling-error";
+import { Xyz } from "@/utils/xyz";
 
 type Props = {
   children: React.ReactNode;
@@ -27,7 +28,7 @@ type Props = {
 type SchedulingSchema = InferType<typeof validationSchema>;
 
 export function Scheduling({ children, service }: Props) {
-  const serviceName = service.name;
+  const serviceName = service.title;
 
   const form = useForm<SchedulingSchema>({
     resolver: yupResolver(validationSchema),
@@ -63,35 +64,57 @@ export function Scheduling({ children, service }: Props) {
             onSubmit={form.handleSubmit(() => {})}
             className="mb-4 flex flex-col justify-between gap-4 overflow-y-auto p-6 pt-1 md:mb-0"
           >
-            {/* <XyzTransition apper xyz="fade ease-in-out-back right duration-3"> */}
-            {step === 0 && (
-              <div className="flex h-full flex-col">
-                <div className="space-y-4">
-                  <p>{service.description}</p>
-                  <p className="flex gap-2">
-                    Valor do serviço:{" "}
-                    <p className="text-md font-semibold">R$ 99,90</p>
-                  </p>
+            <XyzTransition xyz="fade duration-2">
+              {step === 0 && (
+                <div className="flex h-full flex-col">
+                  <div className="space-y-4">
+                    <p>{service.description}</p>
+                    <p className="flex gap-2">
+                      Valor do serviço:{" "}
+                      <p className="text-md font-semibold">R$ 99,90</p>
+                    </p>
+                  </div>
+
+                  <Button
+                    className="mt-auto flex gap-2 md:mt-4"
+                    onClick={() => form.setValue("step", 1)}
+                  >
+                    Verificar disponibilidade
+                    <FaArrowRight />
+                  </Button>
                 </div>
-
-                <Button
-                  className="mt-auto flex gap-2 md:mt-4"
-                  onClick={() => form.setValue("step", 1)}
-                >
-                  Verificar disponibilidade
-                  <FaArrowRight />
-                </Button>
-              </div>
-            )}
-            {step === 1 && <ShedulingAvaliabilities />}
-            {step === 2 && <ShedulingFormInfo />}
-            {step === 3 && <SchedulingResume />}
-            {step === 4 && <SchedulingPayment />}
-            {step === 5 && <SchedulingSuccess />}
-
-            {/* //* Error comp */}
-            {step === 9 && <SchedulingError />}
-            {/* </XyzTransition> */}
+              )}
+              {step === 1 && (
+                <div className="w-full">
+                  <ShedulingAvaliabilities />
+                </div>
+              )}
+              {step === 2 && (
+                <div className="w-full">
+                  <ShedulingFormInfo />
+                </div>
+              )}
+              {step === 3 && (
+                <div className="w-full">
+                  <SchedulingResume />
+                </div>
+              )}
+              {step === 4 && (
+                <div className="w-full">
+                  <SchedulingPayment />
+                </div>
+              )}
+              {step === 5 && (
+                <div className="w-full">
+                  <SchedulingSuccess />
+                </div>
+              )}
+              {step === 9 && (
+                <div className="w-full">
+                  <SchedulingError />
+                </div>
+              )}
+            </XyzTransition>
           </form>
         </FormProvider>
       </DialogContent>

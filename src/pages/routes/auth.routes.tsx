@@ -6,6 +6,7 @@ import { SignIn } from "../auth/sign-in";
 import { FirstAccessConfig } from "../app/first-access-config";
 import { Profile } from "../app/profile/profile";
 import { Error404 } from "@/components/error/404";
+import { Landing } from "../landing";
 
 export const authRoutes = createBrowserRouter([
   //* Authenticated routes
@@ -36,6 +37,10 @@ export const authRoutes = createBrowserRouter([
         element: <SignIn />,
       },
     ],
+  },
+  {
+    path: "/",
+    element: <Landing />,
   },
   {
     path: "*",

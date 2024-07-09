@@ -44,6 +44,7 @@ module.exports = {
           foreground: "var(--foreground)",
         },
         "linear-bg-white": "var(--linear-bg-white)",
+        brand: "var(--brand)",
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",

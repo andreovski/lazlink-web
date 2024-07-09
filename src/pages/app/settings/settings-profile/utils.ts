@@ -44,6 +44,10 @@ export const settingsProfileValidationSchema = Yup.object({
   linkedInUrl: Yup.string().notRequired(),
   facebookUrl: Yup.string().notRequired(),
   twitterUrl: Yup.string().notRequired(),
+  recommendation: Yup.string()
+    .email("Digite um e-mail válido")
+    .nullable()
+    .notRequired(),
   userUrl: Yup.string(),
   theme: Yup.object(),
 });

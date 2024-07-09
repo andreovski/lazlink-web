@@ -29,7 +29,7 @@ export function AppProvider({ children }: { children?: React.ReactNode }) {
     null | string
   >(null);
 
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   const {
     data: professional = defaultProfessionalValue,
@@ -62,16 +62,11 @@ export function AppProvider({ children }: { children?: React.ReactNode }) {
     }
   };
 
-  const professionalintedn = {
-    ...professional,
-    premium: true,
-  };
-
   return (
     <AppContext.Provider
       value={{
         isAuthenticated,
-        professional: professionalintedn,
+        professional,
         isLoadingProfessional,
         userGoogleAccessToken,
         handleGoogleLogin,

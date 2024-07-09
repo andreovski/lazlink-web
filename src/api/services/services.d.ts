@@ -3,7 +3,7 @@ interface IService {
   title: string;
   description: string;
   serviceTime: string;
-  value: string;
+  value: number;
   //? ADD
   advancePayment: boolean;
 }
