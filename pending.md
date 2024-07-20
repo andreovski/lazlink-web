@@ -12,7 +12,6 @@
 **Na tabela PROFESSIONAL**
 
 - Campo `avatarUrl` não está sendo setado o valor passado
-- Adicionar o campo `complement` drento de
 - _Discutir sobre qual a finalidade do campo `scheduleCount`_.
 - _Revisar `SCHEDULE_OPTIONS` do profissional_.
 - _Revisar `recommendations` do profissional_.
