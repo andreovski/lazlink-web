@@ -7,7 +7,7 @@
 
 ## BACK-END
 
-**Na tabela USER, fazer a seguinte alteraçoes**
+
 
 **Na tabela PROFESSIONAL**
 
@@ -39,11 +39,6 @@
 **Discutir sobre a tabela SCHEDULE**
 
 **Endpoints**
-
-- Endpoint que busque os dados **não sensiveis** do profissional pelo username. O username será contido na url do profissional.
-- Endpoint que traga os dados do profissional pelo `googleId`, visto que a autenticação será feito pelo googleId.
 - Endpoint que faça a atualização do campo `externalLinks` do profissional.
-- Endpoint para validar a disponibilidade do username escolhido
-
 - Verificar como será feito o upload de imagens
 
