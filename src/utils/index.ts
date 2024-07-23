@@ -18,19 +18,27 @@ export const timeStringToMinutes = (time: string) => {
 export function convertEmptyStringsToNull<T extends Record<string, any>>(
   obj: T,
 ): T {
-  let newObj: Record<string, any> = {};
+  const newObj: Record<string, any> = {};
 
-  for (let key in obj) {
-    if (obj[key] === "") {
+  for (const key in obj) {
+    if (
+      typeof obj[key] === "object" &&
+      obj[key] !== null &&
+      !Array.isArray(obj[key])
+    ) {
+      // Se for um objeto (não nulo e não array), chama a função recursivamente
+      newObj[key] = convertEmptyStringsToNull(obj[key]);
+    } else if (obj[key] === "") {
+      // Se for uma string vazia, converte para null
       newObj[key] = null;
     } else {
+      // Caso contrário, mantém o valor original
       newObj[key] = obj[key];
     }
   }
 
   return newObj as T;
 }
-
 export function formatAddress(address: IAddress): string {
   const { state, city, postalCode, street, number, locality, complement } =
     address;

@@ -1,5 +1,6 @@
-import { timeStringToMinutes } from "@/utils";
 import * as Yup from "yup";
+
+import { timeStringToMinutes } from "@/utils";
 
 export const validationSchema = Yup.object({
   hours: Yup.array(

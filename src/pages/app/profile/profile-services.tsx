@@ -1,12 +1,12 @@
+import { FaCalendar } from "react-icons/fa";
+
+import { ArticleIll } from "@/assets/articles-ill";
+import { NothingToShowIll } from "@/assets/nothing-to-show-ill";
 import { SkeletonServices } from "@/components/layouts/skeleton-services";
 import { Button } from "@/components/ui/button";
 import { TextClamped } from "@/components/ui/text-clamped";
 import { useAppContext } from "@/context/app-context";
 import { Scheduling } from "@/pages/app/scheduling";
-import { FaCalendar } from "react-icons/fa";
-
-import { ArticleIll } from "@/assets/articles-ill";
-import { NothingToShowIll } from "@/assets/nothing-to-show-ill";
 
 export function ProfileServices() {
   const { isLoadingProfessional, professional } = useAppContext();

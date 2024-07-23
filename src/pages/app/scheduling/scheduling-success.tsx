@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { TextClamped } from "@/components/ui/text-clamped";
 import { format, toZonedTime } from "date-fns-tz";
 import { useFormContext } from "react-hook-form";
 import {
@@ -9,6 +7,9 @@ import {
   FaGoogle,
   FaWhatsapp,
 } from "react-icons/fa";
+
+import { Button } from "@/components/ui/button";
+import { TextClamped } from "@/components/ui/text-clamped";
 
 export function SchedulingSuccess() {
   const form = useFormContext();

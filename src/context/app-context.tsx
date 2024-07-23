@@ -1,18 +1,27 @@
-import { useQueryGetProfessionalById } from "@/api/professional";
-import { ThemeProvider } from "@/theme/theme-provider";
-import React, { createContext, useContext, useState } from "react";
-import { Outlet } from "react-router-dom";
-import { defaultProfessionalValue } from "./utils";
+import { useQueryClient } from "@tanstack/react-query";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { Outlet, useParams } from "react-router-dom";
+
 import {
-  GoogleUserDataResponse,
   getUserInformation,
-} from "@/api/google/google";
+  GoogleUserDataResponse,
+} from "@/api/google/google.user";
+import {
+  useQueryGetProfessionalById,
+  useQueryKeyGetProfessionalByUsername,
+} from "@/api/professional";
+import { ThemeProvider } from "@/theme/theme-provider";
+
+import { defaultProfessionalValue } from "./utils";
 
 type AppContext = {
   professional: IProfessional;
   isLoadingProfessional: boolean;
   isAuthenticated: boolean;
   userGoogleAccessToken: string | null;
+  isLoginOut: boolean;
+  setUsername: (username: string) => void;
+  resetState: () => void;
   handleGoogleLogin: (
     access_token: string,
   ) => Promise<GoogleUserDataResponse | null>;
@@ -25,51 +34,84 @@ const AppContext = createContext({
 } as AppContext);
 
 export function AppProvider({ children }: { children?: React.ReactNode }) {
+  const queryClient = useQueryClient();
+
+  const [username, setUsername] = useState("");
+  const [isLoginOut, setIsLoginOut] = useState(false);
+  const [professional, setProfessional] = useState<IProfessional>(
+    defaultProfessionalValue,
+  );
   const [userGoogleAccessToken, setUserGoogleAccessToken] = useState<
     null | string
-  >(null);
+  >("6681fcae392b3ef73236f87f");
 
-  const isAuthenticated = false;
+  const isAuthenticated = !!userGoogleAccessToken;
 
   const {
-    data: professional = defaultProfessionalValue,
+    data: professionalData,
     isLoading: isLoadingProfessional,
-    isError,
+    isError: isErrorProfessional,
     error,
   } = useQueryGetProfessionalById(
-    {
-      id: "6681fcae392b3ef73236f87f",
-    },
-    {
-      enabled: !!isAuthenticated,
-    },
+    { id: userGoogleAccessToken! },
+    { enabled: !!isAuthenticated },
   );
 
-  if (isError) {
+  const {
+    data: viewProfessionalData,
+    isLoading: isLoadingViewProfessional,
+    isError: isErrorViewProfessional,
+  } = useQueryKeyGetProfessionalByUsername(
+    { username: username! },
+    { enabled: !isAuthenticated && !!username.length },
+  );
+
+  useEffect(() => {
+    if (professionalData?._id) {
+      return setProfessional(professionalData);
+    }
+    if (viewProfessionalData?._id) {
+      return setProfessional(viewProfessionalData);
+    }
+  }, [professionalData, viewProfessionalData]);
+
+  if (isErrorProfessional || isErrorViewProfessional) {
     console.log("Error: ", error);
-    throw new Error(error.message);
+    throw new Error(error?.message);
   }
 
+  // eslint-disable-next-line camelcase
   const handleGoogleLogin = async (access_token: string) => {
     try {
       setUserGoogleAccessToken(access_token);
-
       return await getUserInformation(access_token);
     } catch {
       setUserGoogleAccessToken(null);
-
       return null;
     }
+  };
+
+  const resetState = () => {
+    setIsLoginOut(true);
+    setUserGoogleAccessToken(null);
+    setProfessional(defaultProfessionalValue);
+
+    queryClient.resetQueries();
+    setTimeout(() => setIsLoginOut(false), 500);
   };
 
   return (
     <AppContext.Provider
       value={{
         isAuthenticated,
+        isLoginOut,
+        isLoadingProfessional:
+          isLoadingProfessional || isLoadingViewProfessional,
         professional,
-        isLoadingProfessional,
         userGoogleAccessToken,
         handleGoogleLogin,
+        resetState,
+        setUsername,
       }}
     >
       <ThemeProvider

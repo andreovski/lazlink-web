@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button";
-
 import { FaExclamationCircle, FaGoogle } from "react-icons/fa";
+
+import { Button } from "@/components/ui/button";
 
 export function ErrorLogin() {
   return (

@@ -1,10 +1,11 @@
+import { ptBR } from "date-fns/locale";
+import { useFormContext } from "react-hook-form";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { useFormContext } from "react-hook-form";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { ptBR } from "date-fns/locale";
 
 export function ShedulingAvaliabilities() {
   const form = useFormContext();
@@ -55,7 +56,11 @@ export function ShedulingAvaliabilities() {
 
       <div className="mt-4 grid grid-cols-4 gap-2">
         <Button
-          onClick={() => form.setValue("step", step - 1)}
+          onClick={() => [
+            form.setValue("isBacking", true),
+            // ? timeout to preserve the direction of the animation
+            setTimeout(() => form.setValue("step", step - 1), 150),
+          ]}
           variant="ghost"
           className="col-span-1 flex gap-2"
         >
@@ -64,7 +69,11 @@ export function ShedulingAvaliabilities() {
         </Button>
         <Button
           disabled={!hour}
-          onClick={() => form.setValue("step", step + 1)}
+          onClick={() => [
+            form.setValue("isBacking", false),
+            // ? timeout to preserve the direction of the animation
+            setTimeout(() => form.setValue("step", step + 1), 150),
+          ]}
           className="col-span-3 gap-2"
         >
           Continuar

@@ -25,8 +25,8 @@ interface IProfessional {
   theme: ITheme;
   createdAt: Date;
   updatedAt: Date | null;
-
-  //? TO ADD
+  username: string;
+  // ? TO ADD
   enterpriseName: string;
   externalLinks: IExternalLinks[];
   useEnterpriseName: boolean;

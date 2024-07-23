@@ -1,3 +1,9 @@
+import { XyzTransition } from "@animxyz/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useForm } from "react-hook-form";
+import { FaArrowRight } from "react-icons/fa";
+import { InferType } from "yup";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -6,19 +12,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FormProvider, useForm } from "react-hook-form";
-import { FaArrowRight } from "react-icons/fa";
-import { XyzTransition } from "@animxyz/react";
+import { Xyz } from "@/utils/xyz";
+
 import { ShedulingAvaliabilities } from "./scheduling-avaliabilities";
+import { SchedulingError } from "./scheduling-error";
 import { ShedulingFormInfo } from "./scheduling-form-info";
+import { SchedulingPayment } from "./scheduling-payment";
 import { SchedulingResume } from "./scheduling-resume";
 import { SchedulingSuccess } from "./scheduling-success";
-import { SchedulingPayment } from "./scheduling-payment";
-import { InferType } from "yup";
 import { validationSchema } from "./utils";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { SchedulingError } from "./scheduling-error";
-import { Xyz } from "@/utils/xyz";
 
 type Props = {
   children: React.ReactNode;
@@ -41,6 +43,7 @@ export function Scheduling({ children, service }: Props) {
       whatsappPhone: "",
       isWhatsApp: true,
       email: "",
+      isBacking: false,
     },
   });
 
@@ -49,6 +52,9 @@ export function Scheduling({ children, service }: Props) {
   const handleReset = () => {
     form.reset();
   };
+
+  const isBacking = form.watch("isBacking");
+  const animation = isBacking ? "in-left out-right" : "in-right out-left";
 
   return (
     <Dialog onOpenChange={(e) => !e && handleReset()}>
@@ -64,7 +70,7 @@ export function Scheduling({ children, service }: Props) {
             onSubmit={form.handleSubmit(() => {})}
             className="mb-4 flex flex-col justify-between gap-4 overflow-y-auto p-6 pt-1 md:mb-0"
           >
-            <XyzTransition xyz="fade duration-2">
+            <XyzTransition xyz={`ease-out-back ${animation} duration-3`}>
               {step === 0 && (
                 <div className="flex h-full flex-col">
                   <div className="space-y-4">
@@ -77,7 +83,11 @@ export function Scheduling({ children, service }: Props) {
 
                   <Button
                     className="mt-auto flex gap-2 md:mt-4"
-                    onClick={() => form.setValue("step", 1)}
+                    onClick={() => [
+                      form.setValue("isBacking", false),
+                      // ? timeout to preserve the direction of the animation
+                      setTimeout(() => form.setValue("step", 1), 150),
+                    ]}
                   >
                     Verificar disponibilidade
                     <FaArrowRight />

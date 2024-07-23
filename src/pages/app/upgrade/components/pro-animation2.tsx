@@ -1,6 +1,8 @@
-import { themeFonts } from "@/theme/fonts/theme-fonts";
 import "./style2.css";
+
 import { useEffect, useState } from "react";
+
+import { themeFonts } from "@/theme/fonts/theme-fonts";
 
 export function ProAnimation2() {
   const themeFont: any = Object.keys(themeFonts);

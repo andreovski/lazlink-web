@@ -1,6 +1,7 @@
-import { Spinner } from "@/components/ui/spinner";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+
+import { Spinner } from "@/components/ui/spinner";
 
 export function SchedulingPayment() {
   // TODO:

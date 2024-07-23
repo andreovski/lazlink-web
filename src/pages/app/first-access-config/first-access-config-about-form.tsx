@@ -1,15 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { FaArrowRight, FaHashtag, FaUser } from "react-icons/fa";
+import { InferType } from "yup";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
+import { TextareaForm } from "@/components/ui/textarea";
 
 import { validateSchemaAboutForm } from "./utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { TextareaForm } from "@/components/ui/textarea";
-import { InferType } from "yup";
 
 type UserAccessConfigSchema = InferType<typeof validateSchemaAboutForm>;
 

@@ -1,15 +1,17 @@
-import { api } from "@/lib/axios";
 import {
   InvalidateQueryFilters,
   MutationOptions,
   QueryKey,
-  UseMutationResult,
-  UseQueryResult,
   useMutation,
+  UseMutationResult,
   useQuery,
+  UseQueryResult,
 } from "@tanstack/react-query";
-import { IResponseList, ParamsPagination, QueryOptions } from "../utils";
+
+import { api } from "@/lib/axios";
 import { SettingsProfileValidationSchema } from "@/pages/app/settings";
+
+import { IResponseList, ParamsPagination, QueryOptions } from "../utils";
 
 export const queryKeyGetProfessionals = "professionals";
 export const useQueryGetProfessionals = (
@@ -17,7 +19,7 @@ export const useQueryGetProfessionals = (
   config?: QueryOptions<IResponseList<IProfessional[]>>,
 ) =>
   useQuery({
-    queryKey: [queryKeyGetProfessionals, params],
+    queryKey: [queryKeyGetProfessionals, params, params?.page],
     queryFn: async () => {
       const { data } = await api.get<IResponseList<IProfessional[]>>(
         "/professionals",
@@ -39,7 +41,7 @@ export const useQueryGetProfessionalById = (
   config?: QueryOptions<IProfessional>,
 ): UseQueryResult<IProfessional> =>
   useQuery({
-    queryKey: [queryKeyGetProfessionalById, params.id],
+    queryKey: [queryKeyGetProfessionalById, params.id, params],
     queryFn: () => getProfessionalById(params),
     ...config,
   });
@@ -62,6 +64,20 @@ export const useMutationPutProfessional = (
         `/professionals/${payload._id}`,
         payload,
       );
+      return data;
+    },
+    ...config,
+  });
+
+export const queryKeyGetProfessionalByUsername = "getProfessionalByUsername";
+export const useQueryKeyGetProfessionalByUsername = (
+  params: { username: string },
+  config?: QueryOptions<IProfessional>,
+) =>
+  useQuery({
+    queryKey: [queryKeyGetProfessionals, params],
+    queryFn: async () => {
+      const { data } = await api.get<IProfessional>(`/${params.username}`);
       return data;
     },
     ...config,

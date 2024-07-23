@@ -1,7 +1,8 @@
 import * as React from "react";
+import { FieldError, useController, useFormContext } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
-import { FieldError, useController, useFormContext } from "react-hook-form";
+
 import { Label } from "./label";
 
 export interface TextareaProps

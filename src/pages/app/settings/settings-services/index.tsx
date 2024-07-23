@@ -1,3 +1,6 @@
+import { FaPlus, FaTimes } from "react-icons/fa";
+
+import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -5,8 +8,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { FaPlus, FaTimes } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
+
 import { SettingsServicesForm } from "./settings-services-form";
 import { SettingsServicesRow } from "./settings-services-row";
 

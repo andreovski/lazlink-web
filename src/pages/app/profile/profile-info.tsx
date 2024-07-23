@@ -11,17 +11,12 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { TextClamped } from "@/components/ui/text-clamped";
-import { formatAddress, pickInitialNames } from "@/utils";
 import { useAppContext } from "@/context/app-context";
+import { formatAddress, pickInitialNames } from "@/utils";
 import { useLoader } from "@/utils/loader";
 
 export function ProfileInfo() {
-  const { isLoadingProfessional, professional, userGoogleAccessToken } =
-    useAppContext();
-  console.log(
-    "🚀 ~ ProfileInfo ~ userGoogleAccessToken:",
-    userGoogleAccessToken,
-  );
+  const { isLoadingProfessional, professional } = useAppContext();
   const { loader } = useLoader({
     isLoading: isLoadingProfessional,
   });
@@ -88,7 +83,7 @@ export function ProfileInfo() {
         <div className="mt-4 flex justify-center gap-4 text-primary md:mt-0">
           {loader(
             <FaInstagram
-              onClick={() => handleOpenSocialLinks["instagram"]()}
+              onClick={() => handleOpenSocialLinks.instagram()}
               className="cursor-pointer text-xl"
             />,
             {
@@ -98,7 +93,7 @@ export function ProfileInfo() {
           )}
           {loader(
             <FaFacebook
-              onClick={() => handleOpenSocialLinks["facebook"]()}
+              onClick={() => handleOpenSocialLinks.facebook()}
               className="cursor-pointer text-xl"
             />,
             {
@@ -108,7 +103,7 @@ export function ProfileInfo() {
           )}
           {loader(
             <FaLinkedin
-              onClick={() => handleOpenSocialLinks["linkedin"]()}
+              onClick={() => handleOpenSocialLinks.linkedin()}
               className="cursor-pointer text-xl"
             />,
             {
@@ -118,7 +113,7 @@ export function ProfileInfo() {
           )}
           {loader(
             <FaTwitter
-              onClick={() => handleOpenSocialLinks["twitter"]()}
+              onClick={() => handleOpenSocialLinks.twitter()}
               className="cursor-pointer text-xl"
             />,
             {
@@ -145,6 +140,7 @@ export function ProfileInfo() {
           <div className="flex flex-col items-center gap-2">
             {externalLinks.map(({ label, link }) => (
               <Button
+                key={link.concat(label)}
                 onClick={() => window.open(link, "_blank")}
                 className="flex h-8 w-full items-center gap-2 p-0"
               >

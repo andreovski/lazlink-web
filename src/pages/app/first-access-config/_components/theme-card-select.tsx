@@ -1,6 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { TextClamped } from "@/components/ui/text-clamped";
+import "./theme-card-select.css";
+
 import {
   FaArrowRight,
   FaCrown,
@@ -8,12 +7,15 @@ import {
   FaSpinner,
   FaUser,
 } from "react-icons/fa";
-import { defaultAboutValue } from "../utils";
 
-import "./theme-card-select.css";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { BubbleTheme } from "@/components/ui/bubble-theme";
+import { Button } from "@/components/ui/button";
+import { TextClamped } from "@/components/ui/text-clamped";
 import { themeColors } from "@/theme/colors/theme-colors";
 import { themeFonts } from "@/theme/fonts/theme-fonts";
+
+import { defaultAboutValue } from "../utils";
 
 export type ThemeBase = ITheme & {
   premium: boolean;

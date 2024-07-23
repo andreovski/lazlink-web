@@ -1,4 +1,5 @@
 import React from "react";
+import { FaChevronRight, FaTimes } from "react-icons/fa";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,10 +10,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Separator } from "@/components/ui/separator";
-import { FaChevronRight, FaTimes } from "react-icons/fa";
-import { daysToSchedule } from "./utils";
-import { SettingsSchedulesForm } from "./settings-schedules-form";
 import { useDisclosure } from "@/utils/hooks/useDisclosure";
+
+import { SettingsSchedulesForm } from "./settings-schedules-form";
+import { daysToSchedule } from "./utils";
 
 export function SettingsSchedules() {
   const { isOpen, open, close } = useDisclosure({ opened: false });

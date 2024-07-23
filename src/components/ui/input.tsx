@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils";
 
 import { Label } from "./label";
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: FieldError | undefined;
   hideErrorMessage?: boolean;
 }

@@ -1,11 +1,11 @@
-import { Outlet, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 
+import { Error404 } from "@/components/error/404";
 import { BrandHeader } from "@/components/layouts/brand-header";
 
-import { SignIn } from "../auth/sign-in";
 import { FirstAccessConfig } from "../app/first-access-config";
 import { Profile } from "../app/profile/profile";
-import { Error404 } from "@/components/error/404";
+import { SignIn } from "../auth/sign-in";
 import { Landing } from "../landing";
 
 export const authRoutes = createBrowserRouter([

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useRef, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useRef } from "react";
 
 export function useThrottle(fun: Function, timeout: number) {
   const timer = useRef(null);
@@ -20,12 +20,12 @@ export function useThrottle(fun: Function, timeout: number) {
   return (...args: any) => {
     cancel();
 
-    //@ts-ignore
+    // @ts-ignore
     timer.current = setTimeout(() => {
       timer.current = null;
 
-      if (fun && typeof fun === 'function') {
-        //@ts-ignore
+      if (fun && typeof fun === "function") {
+        // @ts-ignore
         fun.apply(this, args);
       }
     }, timeout);

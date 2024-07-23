@@ -1,5 +1,5 @@
 interface IScheduleOptions {
   _id: string;
-  time: Number;
+  time: number;
   charge: string;
 }

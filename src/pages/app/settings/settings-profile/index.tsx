@@ -1,17 +1,6 @@
-import AvatarUpload from "@/components/ui/avatarUpload";
-import { Button } from "@/components/ui/button";
-import {
-  DrawerClose,
-  DrawerContent,
-  DrawerTitle,
-} from "@/components/ui/drawer";
-import { Input, InputForm } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
-import { TextareaForm } from "@/components/ui/textarea";
-import { Xyz } from "@/utils/xyz";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Label } from "@radix-ui/react-label";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import {
@@ -26,22 +15,35 @@ import {
   FaTimes,
   FaUserFriends,
 } from "react-icons/fa";
-import { settingsProfileValidationSchema } from "./utils";
 import { InferType } from "yup";
-import { InputPhone } from "@/components/ui/input-phone";
-import { SettingsProfileTheme } from "./settings-profile-theme";
-import { SettingsExternalLinks } from "./settings-external-links";
-import { useAppContext } from "@/context/app-context";
+
 import {
   queryKeyGetProfessionalById,
   useMutationPutProfessional,
 } from "@/api/professional";
+import { FieldCountryState } from "@/components/fields/field-country-state";
+import AvatarUpload from "@/components/ui/avatarUpload";
+import { Button } from "@/components/ui/button";
+import {
+  DrawerClose,
+  DrawerContent,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+import { Input, InputForm } from "@/components/ui/input";
+import { InputPhone } from "@/components/ui/input-phone";
+import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { TextareaForm } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
+import { useAppContext } from "@/context/app-context";
 import { env } from "@/env";
 import { convertEmptyStringsToNull } from "@/utils";
-import { useQueryClient } from "@tanstack/react-query";
-import { FieldCountryState } from "@/components/fields/field-country-state";
 import { useCopyClipboard } from "@/utils/hooks/useCopyClipboard";
+import { Xyz } from "@/utils/xyz";
+
+import { SettingsExternalLinks } from "./settings-external-links";
+import { SettingsProfileTheme } from "./settings-profile-theme";
+import { settingsProfileValidationSchema } from "./utils";
 
 export type SettingsProfileValidationSchema = InferType<
   typeof settingsProfileValidationSchema
@@ -96,11 +98,10 @@ export function SettingsProfile() {
     const payload = convertEmptyStringsToNull(values);
 
     await mutate(payload);
-    return;
   };
 
-  const handleChangeInputUncontrolled = (name: any, value: any) => {
-    form.setValue(name, value);
+  const handleChangeInputUncontrolled = (name: string, value: string) => {
+    form.setValue(name as any, value);
   };
 
   const errorPhone = formState.errors?.cellphone;

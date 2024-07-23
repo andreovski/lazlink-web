@@ -1,27 +1,51 @@
-import { Button } from "@/components/ui/button";
-import { FaArrowCircleUp, FaClock, FaCog, FaEdit } from "react-icons/fa";
+import { useEffect } from "react";
+import {
+  FaArrowCircleUp,
+  FaClock,
+  FaCog,
+  FaEdit,
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaUser,
+} from "react-icons/fa";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { Logout } from "@/components/layouts/logout";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Brand } from "@/components/ui/brand";
+import { Button } from "@/components/ui/button";
 import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
+import { Spinner } from "@/components/ui/spinner";
+import { useAppContext } from "@/context/app-context";
+
 import {
   SettingsProfile,
   SettingsSchedules,
   SettingsServicos,
 } from "../settings";
 import { Upgrade } from "../upgrade";
-import { useAppContext } from "@/context/app-context";
 import { ProfileInfo } from "./profile-info";
 import { ProfileServices } from "./profile-services";
 
 export function Profile() {
-  const { isAuthenticated } = useAppContext();
+  const { username } = useParams();
+  const { isAuthenticated, setUsername } = useAppContext();
+
+  useEffect(() => {
+    if (username) {
+      setUsername(username);
+    }
+  }, [setUsername, username]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex h-[100dvh] flex-col">
       {!isAuthenticated ? (
         <ProfileNotAuthenticated />
       ) : (
         <ProfileAuthenticated />
       )}
+
+      <Logout />
     </div>
   );
 }
@@ -30,7 +54,6 @@ function ProfileNotAuthenticated() {
   const { professional } = useAppContext();
 
   const isPremiumUser = professional?.premium;
-
   const contentH = isPremiumUser ? "md:h-screen" : "md:h-[91dvh]";
 
   return (
@@ -41,25 +64,33 @@ function ProfileNotAuthenticated() {
         <div className="flex flex-col gap-4 md:flex-1">
           <ProfileInfo />
         </div>
-        <div className="flex md:flex-1">
+        <div className="flex w-full md:flex-1">
           <ProfileServices />
         </div>
       </div>
 
       {!isPremiumUser && (
-        <div className={`flex w-full flex-col md:h-[8dvh]`}>
+        <div className={`mt-auto flex w-full flex-col md:h-[8dvh]`}>
           <Brand />
         </div>
       )}
+
+      <Button
+        variant={"ghost"}
+        className="absolute right-2 top-2 flex items-center gap-2"
+        onClick={() => [window.open("/login")]}
+      >
+        Login
+        <FaSignInAlt />
+      </Button>
     </>
   );
 }
 
 function ProfileAuthenticated() {
-  const { professional } = useAppContext();
+  const { professional, resetState } = useAppContext();
 
   const isPremiumUser = professional?.premium;
-  // const userTheme = professional?.theme.profile || "default";
 
   const contentH = isPremiumUser ? "md:h-[91dvh]" : "md:h-[85dvh]";
   const footerH = isPremiumUser ? "md:h-[8dvh]" : "md:h-[15dvh]";
@@ -74,12 +105,12 @@ function ProfileAuthenticated() {
         <div className="flex flex-col gap-4 md:flex-1">
           <ProfileInfo />
         </div>
-        <div className="flex md:flex-1">
+        <div className="flex w-full md:flex-1">
           <ProfileServices />
         </div>
       </div>
 
-      <div className={`flex w-full flex-col ${footerH}`}>
+      <div className={`flex w-full flex-col ${footerH} mt-auto`}>
         {!isPremiumUser && <Brand />}
         <div className="flex flex-wrap justify-between gap-2 px-4 py-4 md:px-24">
           <Drawer direction="right">
@@ -130,6 +161,15 @@ function ProfileAuthenticated() {
           )}
         </div>
       </div>
+
+      <Button
+        variant={"ghost"}
+        className="absolute right-2 top-2 flex items-center gap-2"
+        onClick={() => [resetState()]}
+      >
+        Sair
+        <FaSignOutAlt />
+      </Button>
     </>
   );
-};
+}

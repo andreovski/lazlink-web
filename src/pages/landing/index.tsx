@@ -1,7 +1,8 @@
-import { Logo } from "@/assets/logo";
-import { Button } from "@/components/ui/button";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+
+import { Logo } from "@/assets/logo";
+import { Button } from "@/components/ui/button";
 
 export function Landing() {
   const navigate = useNavigate();

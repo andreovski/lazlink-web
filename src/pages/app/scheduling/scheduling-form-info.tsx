@@ -1,12 +1,13 @@
+import { format } from "date-fns";
+import { useFormContext } from "react-hook-form";
+import { FaArrowLeft, FaArrowRight, FaCalendar, FaClock } from "react-icons/fa";
+
 import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 import { InputPhone } from "@/components/ui/input-phone";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Xyz } from "@/utils/xyz";
-import { format } from "date-fns";
-import { useFormContext } from "react-hook-form";
-import { FaArrowLeft, FaArrowRight, FaCalendar, FaClock } from "react-icons/fa";
 
 export function ShedulingFormInfo() {
   const form = useFormContext();
@@ -34,7 +35,9 @@ export function ShedulingFormInfo() {
     ]);
 
     if (isValidated) {
-      form.setValue("step", step + 1);
+      form.setValue("isBacking", false);
+      // ? timeout to preserve the direction of the animation
+      setTimeout(() => form.setValue("step", step + 1), 150);
     }
   };
 
@@ -102,7 +105,7 @@ export function ShedulingFormInfo() {
             />
             {errorWhatsappPhone?.message && (
               <p className="text-xs font-medium text-red-600">
-                {errorWhatsappPhone.message as String}
+                {errorWhatsappPhone.message as string}
               </p>
             )}
           </div>
@@ -113,7 +116,11 @@ export function ShedulingFormInfo() {
 
       <div className="mt-auto grid grid-cols-4 gap-2 md:mt-4">
         <Button
-          onClick={() => form.setValue("step", step - 1)}
+          onClick={() => [
+            form.setValue("isBacking", true),
+            // ? timeout to preserve the direction of the animation
+            setTimeout(() => form.setValue("step", step - 1), 150),
+          ]}
           variant="ghost"
           className="col-span-1 flex gap-2"
         >

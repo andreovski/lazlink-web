@@ -2,7 +2,6 @@ import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { FaEnvelope, FaExclamationCircle } from "react-icons/fa";
 
 export function Error404() {
-  QueryErrorResetBoundary;
   return (
     <div className="relative mx-auto flex h-[90vh] w-full max-w-[765px] flex-col items-center justify-center gap-8 px-8 py-5 md:px-0">
       <div className="flex flex-col items-center gap-4 text-primary">

@@ -1,20 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { useState } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { FaArrowRight } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
+import { InferType } from "yup";
 
+import AvatarUpload from "@/components/ui/avatarUpload";
 import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Xyz } from "@/utils/xyz";
 
-import { InferType } from "yup";
-
 import { validateSchemaBasicForm } from "./utils";
-import AvatarUpload from "@/components/ui/avatarUpload";
-import { useLocation } from "react-router-dom";
 
 type UserAccessConfigSchema = InferType<typeof validateSchemaBasicForm>;
 

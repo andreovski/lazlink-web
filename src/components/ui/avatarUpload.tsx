@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Avatar, AvatarImage, AvatarFallback } from "./avatar";
-import { FaCamera } from "react-icons/fa";
 import { useFormContext } from "react-hook-form";
+import { FaCamera } from "react-icons/fa";
+
+import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 
 const AvatarUpload = ({
   className = "",

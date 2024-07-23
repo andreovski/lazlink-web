@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import axios from "axios";
 
 export type GoogleUserDataResponse = {
@@ -25,6 +26,6 @@ export const getUserInformation = async (google_access_token: string) => {
 
     return response;
   } catch {
-    throw new Error("Error fetching google user data");
+    throw new Error("Error fetching user google data");
   }
 };

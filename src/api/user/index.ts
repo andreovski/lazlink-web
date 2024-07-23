@@ -1,5 +1,7 @@
-import { api } from "@/lib/axios";
 import { useQuery } from "@tanstack/react-query";
+
+import { api } from "@/lib/axios";
+
 import { IResponseList, ParamsPagination, QueryOptions } from "../utils";
 
 export const queryKeyGetUsers = "users";
@@ -8,7 +10,7 @@ export const useQueryGetUsers = (
   config?: QueryOptions<IResponseList<IUser[]>>,
 ) =>
   useQuery({
-    queryKey: [queryKeyGetUsers, params],
+    queryKey: [queryKeyGetUsers, params, params?.page],
     queryFn: async () => {
       const { data } = await api.get<IResponseList<IUser[]>>("/users", {
         params: {

@@ -1,18 +1,27 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useRef } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { FaSave, FaTimes, FaTrash } from "react-icons/fa";
+import { InferType } from "yup";
+
+import { useMutationUpdateServices } from "@/api/services";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   DrawerClose,
   DrawerContent,
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { InputForm } from "@/components/ui/input";
-import { TextareaForm } from "@/components/ui/textarea";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
-import { FaSave, FaTimes, FaTrash } from "react-icons/fa";
-import { serviceTimeValues, settingsServicosValidationSchema } from "./utils";
-import { InferType } from "yup";
+import { InputCurrency } from "@/components/ui/input-currency";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -21,18 +30,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { InputCurrency } from "@/components/ui/input-currency";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { useRef } from "react";
-import { useDisclosure } from "@/utils/hooks/useDisclosure";
-import { useMutationUpdateServices } from "@/api/services";
+import { TextareaForm } from "@/components/ui/textarea";
 import { useAppContext } from "@/context/app-context";
+import { useDisclosure } from "@/utils/hooks/useDisclosure";
+
+import { serviceTimeValues, settingsServicosValidationSchema } from "./utils";
 
 type SettingsProfileValidationSchema = InferType<
   typeof settingsServicosValidationSchema
@@ -62,7 +64,6 @@ export function SettingsServicesForm({
     });
 
     console.log("🚀 ~ onSubmit ~ values:", values);
-    return;
   };
 
   const serviceTimeValue = form.watch("serviceTime");

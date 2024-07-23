@@ -1,7 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { TextClamped } from "@/components/ui/text-clamped";
-import { pickInitialNames } from "@/utils";
 import {
   FaFacebook,
   FaInstagram,
@@ -10,6 +6,11 @@ import {
   FaTwitter,
   FaWhatsapp,
 } from "react-icons/fa";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { TextClamped } from "@/components/ui/text-clamped";
+import { pickInitialNames } from "@/utils";
 
 export function ThemeAlternativeProfile() {
   const avatarURL = "https://github.com/andreovski.png";

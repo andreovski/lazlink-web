@@ -1,6 +1,7 @@
 import { UpgradeConfirm } from "@/pages/app/upgrade/upgrade-confirm";
-import { Dialog, DialogContent } from "../ui/dialog";
 import { DisclosureType } from "@/utils/hooks/useDisclosure";
+
+import { Dialog, DialogContent } from "../ui/dialog";
 
 export function DialogUpdateConfirm({ isOpen, close, open }: DisclosureType) {
   return (

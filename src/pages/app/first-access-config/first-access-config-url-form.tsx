@@ -1,13 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Label } from "@radix-ui/react-label";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { FaArrowRight } from "react-icons/fa";
+import { InferType } from "yup";
 
 import { Button } from "@/components/ui/button";
 import { InputForm } from "@/components/ui/input";
 
 import { validateSchemaUrlForm } from "./utils";
-import { Label } from "@radix-ui/react-label";
-import { InferType } from "yup";
 
 type UserAccessConfigSchema = InferType<typeof validateSchemaUrlForm>;
 

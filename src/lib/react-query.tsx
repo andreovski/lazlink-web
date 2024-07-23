@@ -1,5 +1,6 @@
-import { toast } from "@/components/ui/use-toast";
 import { QueryClient } from "@tanstack/react-query";
+
+import { toast } from "@/components/ui/use-toast";
 
 export const queryClient = new QueryClient({
   defaultOptions: {

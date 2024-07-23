@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { useAppContext } from "@/context/app-context";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
-
 import { FaExclamationCircle, FaGoogle, FaSpinner } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+
+import { Button } from "@/components/ui/button";
+import { useAppContext } from "@/context/app-context";
 
 export function SignIn() {
   const [hasError, setHasError] = useState(false);
@@ -15,9 +15,12 @@ export function SignIn() {
   const navigate = useNavigate();
 
   const login = useGoogleLogin({
+    scope:
+      "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events",
     onNonOAuthError: () => setIsLogginIn(false),
     onSuccess: async (tokenResponse) => {
       const data = await handleGoogleLogin(tokenResponse.access_token);
+      console.log("🚀 ~ onSuccess: ~ data:", data);
 
       if (data) {
         navigate("/acesso/config", {

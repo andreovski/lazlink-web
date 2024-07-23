@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { TextClamped } from "@/components/ui/text-clamped";
 import { format } from "date-fns";
 import { useFormContext } from "react-hook-form";
 import { FaArrowLeft, FaArrowRight, FaCalendar, FaClock } from "react-icons/fa";
+
+import { Button } from "@/components/ui/button";
+import { TextClamped } from "@/components/ui/text-clamped";
 
 export function SchedulingResume() {
   const form = useFormContext();
@@ -44,7 +45,10 @@ export function SchedulingResume() {
 
       <div className="mt-auto grid grid-cols-4 gap-2 md:mt-4">
         <Button
-          onClick={() => form.setValue("step", step - 1)}
+          onClick={() => [
+            form.setValue("isBacking", true),
+            form.setValue("step", step - 1),
+          ]}
           variant="ghost"
           className="col-span-1 flex gap-2"
         >
@@ -52,7 +56,10 @@ export function SchedulingResume() {
           Voltar
         </Button>
         <Button
-          onClick={() => form.setValue("step", step + 1)}
+          onClick={() => [
+            form.setValue("isBacking", false),
+            form.setValue("step", step + 1),
+          ]}
           className="col-span-3 gap-2"
         >
           Continuar

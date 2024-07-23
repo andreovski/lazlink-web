@@ -1,7 +1,8 @@
-import { useReducer } from "react";
-import { Input } from "../ui/input"; // Shandcn UI Input
-import { UseFormReturn, useController, useFormContext } from "react-hook-form";
 import { Label } from "@radix-ui/react-label";
+import { useReducer } from "react";
+import { useController, useFormContext } from "react-hook-form";
+
+import { Input } from "../ui/input";
 
 type TextInputProps = {
   name: string;
@@ -41,7 +42,10 @@ export function InputCurrency({
     return moneyFormatter.format(Number(digits) / 100);
   }, initialValue);
 
-  function handleChange(realChangeFn: Function, formattedValue: string) {
+  function handleChange(
+    realChangeFn: (v: number) => void,
+    formattedValue: string,
+  ) {
     const digits = formattedValue.replace(/\D/g, "");
     const realValue = Number(digits) / 100;
     realChangeFn(realValue);

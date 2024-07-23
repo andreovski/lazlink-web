@@ -22,4 +22,6 @@ export const validationSchema = Yup.object({
       message: "É necessário informar um e-mail valido",
     })
     .required("É obrigatório informar o email"),
+
+  isBacking: Yup.boolean(),
 });

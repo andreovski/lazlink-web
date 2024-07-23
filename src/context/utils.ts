@@ -43,4 +43,5 @@ export const defaultProfessionalValue: IProfessional = {
   updatedAt: new Date(),
   useEnterpriseName: false,
   whatsappPhone: "",
+  username: "",
 };

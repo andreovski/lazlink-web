@@ -1,6 +1,8 @@
 import { FaArrowLeft, FaCheckCircle } from "react-icons/fa";
-import { ProAnimation2 } from "./components/pro-animation2";
+
 import { Button } from "@/components/ui/button";
+
+import { ProAnimation2 } from "./components/pro-animation2";
 
 export function UpgradeConfirm({
   goBack,

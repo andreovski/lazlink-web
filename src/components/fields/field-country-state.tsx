@@ -1,4 +1,8 @@
+import { useFormContext } from "react-hook-form";
+
 import { statesOfBrazil } from "@/utils/states";
+
+import { Label } from "../ui/label";
 import {
   Select,
   SelectContent,
@@ -7,8 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Label } from "../ui/label";
-import { useFormContext } from "react-hook-form";
 
 export function FieldCountryState({ name = "state" }: { name?: string }) {
   const form = useFormContext();

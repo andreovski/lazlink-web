@@ -1,6 +1,7 @@
+import { FaExclamationCircle, FaInfoCircle } from "react-icons/fa";
+
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { FaExclamationCircle, FaInfoCircle } from "react-icons/fa";
 
 export function SchedulingError() {
   const retry = () => {};

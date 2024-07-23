@@ -1,5 +1,6 @@
-import { toast } from "@/components/ui/use-toast";
 import { useState } from "react";
+
+import { toast } from "@/components/ui/use-toast";
 
 export const useCopyClipboard = (value = "") => {
   const [hasCopied, setHasCopied] = useState(false);
@@ -28,9 +29,8 @@ export const useCopyClipboard = (value = "") => {
     setTimeout(() => setHasCopied(false), 1500);
 
     toast({
-      title: "O conteúdo copiado para área de transferência!",
+      title: "O conteúdo foi copiado para área de transferência!",
     });
-    return;
   };
 
   return { value, onCopy, hasCopied };

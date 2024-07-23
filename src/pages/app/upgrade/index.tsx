@@ -1,17 +1,18 @@
+import { XyzTransition } from "@animxyz/react";
+import { useState } from "react";
+import { FaArrowRight, FaCaretRight, FaCheckCircle } from "react-icons/fa";
+
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { FaArrowRight, FaCaretRight, FaCheckCircle } from "react-icons/fa";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
-import { ProAnimation2 } from "./components/pro-animation2";
-import { useState } from "react";
-import { UpgradeConfirm } from "./upgrade-confirm";
 
-import { XyzTransition } from "@animxyz/react";
+import { ProAnimation2 } from "./components/pro-animation2";
+import { UpgradeConfirm } from "./upgrade-confirm";
 
 type Props = {
   children: React.ReactNode;

@@ -1,9 +1,7 @@
 import { CheckIcon, ChevronsUpDown } from "lucide-react";
-
 import * as React from "react";
-
+import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 import * as RPNInput from "react-phone-number-input";
-
 import flags from "react-phone-number-input/flags";
 
 import { Button } from "@/components/ui/button";
@@ -21,10 +19,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
 import { cn } from "@/lib/utils";
+
 import { ScrollArea } from "./scroll-area";
-import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
 type InputPhoneProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -162,7 +159,7 @@ const FlagComponent = ({ country, countryName }: RPNInput.FlagProps) => {
   const Flag = flags[country];
 
   return (
-    <span className="flex h-4 w-6 overflow-hidden rounded-sm bg-foreground/20">
+    <span className="bg-foreground/20 flex h-4 w-6 overflow-hidden rounded-sm">
       {Flag && <Flag title={countryName} />}
     </span>
   );

@@ -1,3 +1,20 @@
+import { useQueryClient } from "@tanstack/react-query";
+import { useRef } from "react";
+import { useForm, useFormContext } from "react-hook-form";
+import {
+  FaAdjust,
+  FaChevronRight,
+  FaFont,
+  FaLock,
+  FaSave,
+  FaTimes,
+} from "react-icons/fa";
+
+import {
+  queryKeyGetProfessionalById,
+  useMutationPutProfessional,
+} from "@/api/professional";
+import { DialogUpdateConfirm } from "@/components/dialogs/dialog-update-confirm";
 import { BubbleTheme } from "@/components/ui/bubble-theme";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,37 +24,22 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { AppThemes, themeColors } from "@/theme/colors/theme-colors";
-import {
-  FaAdjust,
-  FaChevronRight,
-  FaFont,
-  FaLock,
-  FaSave,
-  FaTimes,
-} from "react-icons/fa";
-import { ProfileInfo } from "../../profile/profile-info";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { useTheme } from "@/theme/theme-provider";
-import { ThemeFonts, themeFonts } from "@/theme/fonts/theme-fonts";
-import { useRef } from "react";
-import { useForm, useFormContext } from "react-hook-form";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useDisclosure } from "@/utils/hooks/useDisclosure";
-import { DialogUpdateConfirm } from "@/components/dialogs/dialog-update-confirm";
-import { useAppContext } from "@/context/app-context";
-import {
-  queryKeyGetProfessionalById,
-  useMutationPutProfessional,
-} from "@/api/professional";
-import { SettingsProfileValidationSchema } from ".";
-import { useQueryClient } from "@tanstack/react-query";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { toast } from "@/components/ui/use-toast";
+import { useAppContext } from "@/context/app-context";
+import { AppThemes, themeColors } from "@/theme/colors/theme-colors";
+import { ThemeFonts, themeFonts } from "@/theme/fonts/theme-fonts";
+import { useTheme } from "@/theme/theme-provider";
 import { convertEmptyStringsToNull } from "@/utils";
+import { useDisclosure } from "@/utils/hooks/useDisclosure";
+
+import { ProfileInfo } from "../../profile/profile-info";
+import { SettingsProfileValidationSchema } from ".";
 
 type FormData = {
   color: AppThemes;
@@ -140,7 +142,9 @@ function SettingsProfileThemeContent({ onClose }: { onClose: () => void }) {
       return premiumDialog.open();
     }
 
-    const valuesFormContext = convertEmptyStringsToNull(formContext.getValues());
+    const valuesFormContext = convertEmptyStringsToNull(
+      formContext.getValues(),
+    );
 
     return mutate({
       ...valuesFormContext,

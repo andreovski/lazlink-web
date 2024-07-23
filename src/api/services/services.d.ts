@@ -4,11 +4,11 @@ interface IService {
   description: string;
   serviceTime: string;
   value: number;
-  //? ADD
+  // ? ADD
   advancePayment: boolean;
 }
 
-//! REMOVE 
+//! REMOVE
 interface IServiceUpdate {
   id: string;
   services: IService[];

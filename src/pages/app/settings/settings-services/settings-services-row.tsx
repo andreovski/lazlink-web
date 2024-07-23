@@ -1,17 +1,19 @@
-import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
-import { FaBars, FaChevronRight } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
-import { SettingsServicesForm } from "./settings-services-form";
 import {
   DragDropContext,
-  Droppable,
   Draggable,
+  Droppable,
   DropResult,
 } from "@hello-pangea/dnd";
 import { useState } from "react";
-import { serviceMock } from "./utils";
+import { FaBars, FaChevronRight } from "react-icons/fa";
+
+import { Button } from "@/components/ui/button";
+import { Drawer, DrawerTrigger } from "@/components/ui/drawer";
 import { dndReorder } from "@/utils/dnd";
 import { useSize } from "@/utils/hooks/useSize";
+
+import { SettingsServicesForm } from "./settings-services-form";
+import { serviceMock } from "./utils";
 
 export function SettingsServicesRow() {
   const { isMd } = useSize();
